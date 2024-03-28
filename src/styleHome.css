@@ -1,71 +1,127 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'DM Serif Display', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "DM Serif Display", sans-serif;
 }
 
 a {
-    text-decoration: none;
-    color: #000;
-
+  text-decoration: none;
+  color: #000;
 }
 
 img {
-    object-fit: cover;
+  object-fit: cover;
 }
 
 body {
-    background-color: #ffffff;
-
+  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Optional for full viewport height */
 }
 
 nav {
-    padding: 0 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100px;
-    margin-left: 60px;
-    margin-right: 60px;
-
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  margin-left: 60px;
+  margin-right: 60px;
 }
 
 nav img {
-    width: 200px;
-    height: 100px;
-    margin-right: 20px;
-    margin-top: 20px;
+  width: 200px;
+  height: 100px;
+  margin-right: 20px;
+  margin-top: 20px;
 }
 
 nav a.logo {
-    font-size: 20px;
-    color: black;
-    font-weight: 400;
-
+  font-size: 20px;
+  color: black;
+  font-weight: 400;
 }
 
 nav .links a:not(:last-child) {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .secondNav {
-    display: flex;
-    justify-content: flex-end;
-    height: 100px;
-
+  display: flex;
+  justify-content: flex-end;
+  height: 100px;
 }
 
 .cartLinks {
-    padding: 0 80px;
-    height: 100px;
-    margin-right: 60px;
-
+  padding: 0 80px;
+  height: 100px;
+  margin-right: 60px;
 }
 
 .secondNav .cartLinks a:not(:last-child) {
-    margin-right: 20px;
-    font-weight: 0px;
+  margin-right: 20px;
+  font-weight: 0px;
+}
+
+header {
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+header .left {
+  padding: 0;
+}
+
+header .left h1 {
+  font-size: 90px;
+  font-weight: 300;
+}
+
+header .left h1 span {
+  color: #cda274;
+}
+
+header .left pre {
+  margin: 40px 0;
+  padding-right: 20px;
+  line-height: 30px;
+  font-weight: 0;
+  color: black;
+}
+
+header .left a {
+  display: flex;
+  align-items: center;
+  color: white;
+  background: #292f36;
+  width: 200px;
+  padding: 8px;
+  border-radius: 60px;
+}
+
+header .left a i {
+  background-color: white;
+  color: #292f36;
+  font-size: 24px;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+header .left a span {
+  color: white;
+  margin-left: 40px;
+}
+
+header img {
+  width: 60%;
+  height: 100%;
+  border-radius: 30px;
 }
