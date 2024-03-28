@@ -9,7 +9,6 @@
 
 a {
   text-decoration: none;
-  color: #000;
 }
 
 img {
@@ -50,6 +49,28 @@ nav .links a:not(:last-child) {
   margin-right: 20px;
 }
 
+nav .links a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  color: #000;
+}
+
+nav .links a:hover,
+nav .links a.active {
+  color: #cda274;
+}
+
+nav .links a.active::after {
+  content: "";
+  width: 30%;
+  height: 2px;
+  background: #cda274;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
+}
+
 .secondNav {
   display: flex;
   justify-content: flex-end;
@@ -60,6 +81,10 @@ nav .links a:not(:last-child) {
   padding: 0 80px;
   height: 100px;
   margin-right: 60px;
+}
+
+.cartLinks a {
+  color: #000;
 }
 
 .secondNav .cartLinks a:not(:last-child) {
@@ -102,9 +127,19 @@ header .left a {
   align-items: center;
   color: white;
   background: #292f36;
+  transition: all 0.3s ease;
   width: 200px;
   padding: 8px;
   border-radius: 60px;
+  cursor: pointer;
+}
+
+header .left a:hover,
+header .left i:hover {
+  color: white;
+  background: #cda274;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 header .left a i {
@@ -124,4 +159,56 @@ header img {
   width: 60%;
   height: 100%;
   border-radius: 30px;
+}
+
+main .columns {
+  display: flex; /* Makes columns sit side-by-side */
+  justify-content: space-between; /* Evenly spaces columns */
+  margin: 0 80px;
+  margin-top: 200px;
+  margin-right: 60px;
+  margin-left: 60px;
+  margin-bottom: 200px;
+}
+
+main .columns a {
+  color: white;
+}
+
+main .column {
+  width: 33%; /* Sets all columns to 1/3rd width */
+  text-align: center; /* Centers content within columns */
+  padding: 1rem; /* Adds space around content */
+}
+
+main .column h3 {
+  font-size: 24px;
+  font-weight: 200px;
+  padding: 8px;
+}
+
+main .column p {
+  font-size: 18px;
+  font-weight: 0px;
+  color: #292f36;
+  padding: 8px;
+}
+
+.columnButton {
+  color: white;
+  width: 50%;
+  background: #292f36;
+  border-color: #292f36;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.columnButton:hover,
+main .columns a:hover {
+  color: #292f36;
+  background-color: #cda274;
+  border-color: #cda274;
+  transition: all 0.3s ease;
 }
