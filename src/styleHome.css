@@ -143,7 +143,7 @@ header .left i:hover {
 }
 
 header .left a i {
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   color: #292f36;
   font-size: 24px;
   border-radius: 50%;
