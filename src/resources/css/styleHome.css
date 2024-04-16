@@ -22,6 +22,18 @@ body {
   min-height: 100vh; /* Optional for full viewport height */
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.navbar li {
+  list-style: none;
+  padding: 0 20px;
+  font-size: 16px;
+}
+
 nav {
   padding: 0 80px;
   display: flex;
@@ -71,6 +83,23 @@ nav .links a.active::after {
   left: 20px;
 }
 
+.search-form {
+  padding: 0 px;
+  height: 100%;
+  display: flex;
+}
+
+.search-form .search-input {
+  padding: 0 5px 0 5px;
+  color: #000;
+}
+
+.search-form .search-button {
+  margin-left: 5px;
+  border: #cda274;
+  width: 30px;
+}
+
 .secondNav {
   display: flex;
   justify-content: flex-end;
@@ -95,6 +124,7 @@ nav .links a.active::after {
 header {
   padding: 0 80px;
   display: flex;
+  height: 500px;
   align-items: center;
   justify-content: space-between;
   margin-left: 60px;
@@ -103,6 +133,8 @@ header {
 
 header .left {
   padding: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); /* Optional text shadow */
+  z-index: 1; /* Ensure content displays over the image */
 }
 
 header .left h1 {
@@ -118,7 +150,7 @@ header .left pre {
   margin: 40px 0;
   padding-right: 20px;
   line-height: 30px;
-  font-weight: 0;
+  font-style: normal;
   color: black;
 }
 

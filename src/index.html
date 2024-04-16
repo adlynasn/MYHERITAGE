@@ -3,26 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" type="text/css" href="styleHome.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/styleHome.css" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
     />
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap JS (optional if you want to use the carousel controls) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
     <link rel="icon" type="image/png" href="media/MYHeritage_Brand.png" />
     <title>MYHeritage - Home</title>
   </head>
   <body>
     <nav>
-      <a href="index.html" class="logo"
-        ><img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo"
-      /></a>
+      <div>
+        <a href="index.html" class="logo">
+          <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" />
+        </a>
+      </div>
       <div class="links">
-          <a class="active" href="index.html">Home</a>
-          <a href="productCatalog.html">Products</a></li>
-          <a href="#">Artisans</a>
-          <a href="aboutUsPage.html">About Us</a>
-        
+        <ul class="navbar">
+          <li><a class="active" href="index.html">Home</a></li>
+          <li><a href="productCatalog.html">Products</a></li>
+          <li><a href="#">Artisans</a></li>
+          <li><a href="aboutUsPage.html">About Us</a></li>
+        </ul>
+      </div>
+      <div class="searchContainer">
+        <form class="search-form">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search products here"
+          />
+          <button type="submit" class="search-button">
+            <i class="bx bx-search"></i>
+          </button>
+        </form>
       </div>
     </nav>
     <div class="secondNav">
@@ -32,46 +58,56 @@
       </div>
     </div>
 
+    <div class="banner">
+      <img class="images-icon" alt="" src="./public/images@2x.png" />
+
     <header>
       <div class="left">
         <h1>Authentic <span>Malaysia</span></h1>
         <pre>
-Shop handmade treasures.
-Discover the magic of Malaysian craft.</pre
+  Shop handmade treasures.
+  Discover the magic of Malaysian craft.</pre
         >
-            <a href="productCatalog.html"><i class="bx bx-right-arrow-alt"></i><span>Browse</span></a>
-        
+        <a href="productCatalog.html"
+          ><i class="bx bx-right-arrow-alt"></i><span>Browse</span></a
+        >
       </div>
-      <img src="media/homeBanner.png" />
+      <img src="media/homeBanner.png" class="banner-image" />
     </header>
 
     <main>
-        <div class="columns">
-            <div class="column">
-              <h3>Meet Our Artisans</h3>
-              <p>Discover beautiful scarves, bags, and tapestries made with traditional weaving techniques.</p>
-              <button class="columnButton">
-                <a href="#">Shop Now</a>
-            </button>
-            </div>
-            <div class="column">
-              <h3>Batik Artwork</h3>
-              <p>Explore vibrant and intricate batik paintings and fabrics, perfect for home decor or gifts.</p>
-              <button class="columnButton" >
-                <a href="productCatalog.html">Explore Collection</a>
-            </button>
-            </div>
-            <div class="column">
-              <h3>Know More About Us</h3>
-              <p>Find unique and handcrafted silver necklaces, earrings, and bracelets made by skilled artisans.</p>
-              <button class="columnButton">
-                <a href="#">Browse Jewelry </a>
-
-                </button>
-            </div>
-          </div>
-          
+      <div class="columns">
+        <div class="column">
+          <h3>Meet Our Artisans</h3>
+          <p>
+            Discover beautiful scarves, bags, and tapestries made with
+            traditional weaving techniques.
+          </p>
+          <button class="columnButton">
+            <a href="#">Shop Now</a>
+          </button>
+        </div>
+        <div class="column">
+          <h3>Batik Artwork</h3>
+          <p>
+            Explore vibrant and intricate batik paintings and fabrics, perfect
+            for home decor or gifts.
+          </p>
+          <button class="columnButton">
+            <a href="productCatalog.html">Explore Collection</a>
+          </button>
+        </div>
+        <div class="column">
+          <h3>Know More About Us</h3>
+          <p>
+            Find unique and handcrafted silver necklaces, earrings, and
+            bracelets made by skilled artisans.
+          </p>
+          <button class="columnButton">
+            <a href="#">Browse Jewelry </a>
+          </button>
+        </div>
+      </div>
     </main>
-
   </body>
 </html>
