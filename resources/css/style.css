@@ -274,6 +274,19 @@ a.more {
   background: #956e49;
   color: white;
 }
+.btn.btn-editCustom {
+  background-color: #ffffff;
+  color: #3b5d50;
+  margin-top: 30px;
+  width: 200px;
+  height: 60px;
+  border-radius: 30px;
+}
+
+.btn.btn-editCustom:hover {
+  background-color: #222222;
+  color: #ffffff;
+}
 /* section body */
 .section-title {
   color: #2f2f2f;
@@ -987,4 +1000,40 @@ textarea {
   height: 50px;
   border-radius: 50%;
   background: rgba(59, 93, 80, 0.2);
+}
+
+.profile-picture {
+  width: 300px; 
+  height: 300px;
+  border-radius: 50%; /* Ensures rounded shape */
+  margin-right: 50px; /* Spacing between picture and user info */
+  margin-left: 50px; 
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+.change-password-form {
+background-color: #f6f6f6;
+padding: 20px; 
+border-radius: 10px;
+margin-bottom: 50px;
+}
+
+.change-password-form label {
+  font-size: 16px;
+  font-family: "DM Serif Display", sans-serif;
+}
+
+.user-profile-form{
+  display: flex;
+  flex-direction: column;
+}
+.user-profile-form-container{
+  background-color: #3b5d50;
+  padding: 50px;
+  border-radius: 10px;
+}
+.user-profile-form-container label {
+  font-size: 18px;
+  color: #ffffff;
+  font-family: "DM Serif Display", sans-serif;
 }
