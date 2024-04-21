@@ -12,6 +12,8 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "@clerk/clerk-js": "^4.71.4"
+    "@clerk/clerk-js": "^4.71.4",
+    "bootstrap": "^5.3.3",
+    "swiper": "^11.1.1"
   }
 }
