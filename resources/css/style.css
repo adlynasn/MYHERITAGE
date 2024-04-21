@@ -287,11 +287,24 @@ a.more {
   background-color: #222222;
   color: #ffffff;
 }
+
+.green-button {
+  background-color: white; /* Your desired green color */
+  color: white; /* Font color */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Adjust padding if needed */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+.green-button:hover {
+  background-color: #cda274;
+  color: white;
+}
+
 /* section body */
 .section-title {
   color: #2f2f2f;
 }
-
 .product-section {
   padding: 7rem 0;
   /* background-color: #e2c5a6; */
@@ -1003,19 +1016,19 @@ textarea {
 }
 
 .profile-picture {
-  width: 300px; 
+  width: 300px;
   height: 300px;
   border-radius: 50%; /* Ensures rounded shape */
   margin-right: 50px; /* Spacing between picture and user info */
-  margin-left: 50px; 
+  margin-left: 50px;
   margin-top: 70px;
   margin-bottom: 50px;
 }
 .change-password-form {
-background-color: #f6f6f6;
-padding: 20px; 
-border-radius: 10px;
-margin-bottom: 50px;
+  background-color: #f6f6f6;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 50px;
 }
 
 .change-password-form label {
@@ -1023,11 +1036,11 @@ margin-bottom: 50px;
   font-family: "DM Serif Display", sans-serif;
 }
 
-.user-profile-form{
+.user-profile-form {
   display: flex;
   flex-direction: column;
 }
-.user-profile-form-container{
+.user-profile-form-container {
   background-color: #3b5d50;
   padding: 50px;
   border-radius: 10px;
@@ -1036,4 +1049,67 @@ margin-bottom: 50px;
   font-size: 18px;
   color: #ffffff;
   font-family: "DM Serif Display", sans-serif;
+}
+
+/* ContactUs */
+
+.wrapper {
+  width: 100%;
+}
+
+.contact-wrap {
+  background: white;
+}
+
+.info-wrap {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #3b5d50;
+}
+.info-wrap h3 {
+  color: #fff;
+}
+.info-wrap .dbox {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 25px;
+}
+.info-wrap .dbox:last-child {
+  margin-bottom: 0;
+}
+.info-wrap .dbox p {
+  margin-bottom: 0;
+}
+.info-wrap .dbox p span {
+  font-weight: 500;
+  color: #fff;
+}
+.info-wrap .dbox p a {
+  color: #fff;
+}
+.info-wrap .dbox .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+.info-wrap .dbox .icon span {
+  font-size: 20px;
+  color: #fff;
+}
+.info-wrap .dbox .text {
+  width: calc(100% - 50px);
+}
+
+.contactForm .label {
+  color: #000000;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px;
+}
+
+.contactForm .form-control {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0;
 }
