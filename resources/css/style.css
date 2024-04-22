@@ -173,6 +173,18 @@ a.more {
   }
 }
 
+.active-page a {
+  position: relative;
+  border-bottom: 5px solid #cda274;
+  padding-bottom: 0px;
+  opacity: 1;
+}
+
+.active-page a i {
+  font-weight: bold;
+  color: #000000;
+}
+
 /* Hero Section */
 .hero {
   /* background: #e2c5a6; */
