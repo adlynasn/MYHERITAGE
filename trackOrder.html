@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="media/MYHeritage_Brand.png" />
     <link
       rel="stylesheet"
@@ -23,36 +23,34 @@
     <link href="resources/css/tiny-slider.css" rel="stylesheet" />
     <link href="resources/css/style.css" rel="stylesheet" />
     <style>
-        /* Optional custom styles */
- 
-        h2{
-          margin-top: 10px;
-          font-size: 20px;
-          color: black;
+      /* Optional custom styles */
 
-        }
-        .container.order-tracking-container{
-          margin-bottom: 20px;
-        }
-        .container.order-history-container{
-          margin-bottom: 200px;
-        }
+      h2 {
+        margin-top: 10px;
+        font-size: 20px;
+        color: black;
+      }
+      .container.order-tracking-container {
+        margin-bottom: 20px;
+      }
+      .container.order-history-container {
+        margin-bottom: 200px;
+      }
 
-        .editH2{
-          background-color: #aaaaaa;
-        
-          height: 50px;
-          margin-bottom: 10px;
-          padding: 10px;
-          text-align: center;
-        }
-        .table-responsive{
-          margin-top: 30px;
-        }
+      .editH2 {
+        background-color: #aaaaaa;
 
+        height: 50px;
+        margin-bottom: 10px;
+        padding: 10px;
+        text-align: center;
+      }
+      .table-responsive {
+        margin-top: 30px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <script type="module" src="/resources/js/main.js"></script>
     <script
       async
@@ -64,127 +62,139 @@
 
     <!-- Start Header/Navigation -->
     <nav
-        class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
-        arial-label="MYHeritage navigation bar"
-      >
-        <div class="container">
-          <a class="navbar-brand" href="index.html"
-            >MyHeritage
-            <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
-          </a>
-  
-          <!-- Mobile Menu Toggle Button -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-awesome fas fa-bars"></span>
-            <span class="navbar-toggler-awesome fas fa-times"></span>
-          </button>
-          <!-- end of mobile menu toggle button -->
-  
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarsFurni"
-            aria-controls="navbarsFurni"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <div class="collapse navbar-collapse" id="navbarsFurni">
-            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-              <li><a class="nav-link" href="index.html">Home</a></li>
-              <li><a class="nav-link" href="#">Shop</a></li>
-              <li><a class="nav-link" href="#">Artisans</a></li>
-              <li><a class="nav-link" href="#">About Us</a></li>
-              <li><a class="nav-link" href="#">Contact us</a></li>
-            </ul>
-  
-            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-              <li class="nav-item active">
-                <a class="nav-link" href="userAccount.html"
-                  ><i class="bx bx-user"></i
-                ></a>
-                <!-- <div id="user-button"></div> -->
-              </li>
-              <li>
-                <a class="nav-link" href="#"><i class="bx bx-cart"></i></a>
-              </li>
-              <li>
-                <a
-                  class="nav-link"
-                  href="userSignIn.html"
-                  style="color: #3b5d50; padding: 10px"
-                  >Sign In
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
+      arial-label="MYHeritage navigation bar"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          >MyHeritage
+          <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
+        </a>
 
-      <div class="container order-tracking-container">
-        <div class="editH2"> <!-- Add bg-primary class for background color and text-white for text color -->
-          <h2 class="m-0">Order Tracking</h2> <!-- m-0 removes margin for better alignment -->
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-awesome fas fa-bars"></span>
+          <span class="navbar-toggler-awesome fas fa-times"></span>
+        </button>
+        <!-- end of mobile menu toggle button -->
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsFurni"
+          aria-controls="navbarsFurni"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+          <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="#">Shop</a></li>
+            <li><a class="nav-link" href="artisan.html">Artisans</a></li>
+            <li><a class="nav-link" href="homeAboutUs.html">About Us</a></li>
+            <li>
+              <a class="nav-link" href="homeContactUs.html">Contact us</a>
+            </li>
+          </ul>
+
+          <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+            <li class="nav-item active">
+              <a class="nav-link" href="userAccount.html"
+                ><i class="bx bx-user"></i
+              ></a>
+              <!-- <div id="user-button"></div> -->
+            </li>
+            <li>
+              <a class="nav-link" href="cart.html"
+                ><i class="bx bx-cart"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                href="userSignIn.html"
+                style="color: #3b5d50; padding: 10px"
+                >Sign In
+              </a>
+            </li>
+          </ul>
         </div>
-  
-        <div class="table-responsive"> <!-- Add this div for responsive table -->
-            <table class="table table-bordered table-striped bg-light rounded"> <!-- Add bg-light class for light grey background -->
-                <thead class="bg-primary text-white"> <!-- Add background color and text color for header -->
-                    <tr>
-                        <th scope="col">Order Number</th>
-                        <th scope="col">Items</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                </thead>
-                <tbody id="orderTableBody">
-                    <!-- Orders will be dynamically added here -->
-                </tbody>
-            </table>
-        </div>
+      </div>
+    </nav>
+
+    <div class="container order-tracking-container">
+      <div class="editH2">
+        <!-- Add bg-primary class for background color and text-white for text color -->
+        <h2 class="m-0">Order Tracking</h2>
+        <!-- m-0 removes margin for better alignment -->
+      </div>
+
+      <div class="table-responsive">
+        <!-- Add this div for responsive table -->
+        <table class="table table-bordered table-striped bg-light rounded">
+          <!-- Add bg-light class for light grey background -->
+          <thead class="bg-primary text-white">
+            <!-- Add background color and text color for header -->
+            <tr>
+              <th scope="col">Order Number</th>
+              <th scope="col">Items</th>
+              <th scope="col">Status</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody id="orderTableBody">
+            <!-- Orders will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="container order-history-container">
-      <div class="editH2"> <!-- Add bg-primary class for background color and text-white for text color -->
-          <h2 class="m-0">Order History</h2> <!-- m-0 removes margin for better alignment -->
+      <div class="editH2">
+        <!-- Add bg-primary class for background color and text-white for text color -->
+        <h2 class="m-0">Order History</h2>
+        <!-- m-0 removes margin for better alignment -->
       </div>
-  
-      <div class="table-responsive"> <!-- Add this div for responsive table -->
-          <table class="table table-bordered table-striped bg-light rounded"> <!-- Add bg-light class for light grey background -->
-              <thead class="bg-primary text-white"> <!-- Add background color and text color for header -->
-                  <tr>
-                      <th scope="col">Order ID</th>
-                      <th scope="col">Items</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Product Review</th>
-                      <th scope="col">Artisan Review</th>
-                  </tr>
-              </thead>
-              <tbody id="orderHistoryTableBody">
-                  <!-- Order history will be dynamically added here -->
-              </tbody>
-          </table>
+
+      <div class="table-responsive">
+        <!-- Add this div for responsive table -->
+        <table class="table table-bordered table-striped bg-light rounded">
+          <!-- Add bg-light class for light grey background -->
+          <thead class="bg-primary text-white">
+            <!-- Add background color and text color for header -->
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Items</th>
+              <th scope="col">Status</th>
+              <th scope="col">Date</th>
+              <th scope="col">Product Review</th>
+              <th scope="col">Artisan Review</th>
+            </tr>
+          </thead>
+          <tbody id="orderHistoryTableBody">
+            <!-- Order history will be dynamically added here -->
+          </tbody>
+        </table>
       </div>
-  </div>
-  
-    
+    </div>
+
     <footer class="footer-section">
       <div class="container relative">
         <div class="sofa-img">
           <img src="media/MyHeritageHI.png" alt="Image" class="img-fluid" />
         </div>
-        
 
         <div class="row">
           <div class="col-lg-8">
@@ -293,48 +303,55 @@
       </div>
     </footer>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Fetch orders from JSON file
-    fetch('orders.json')
-        .then(response => response.json())
-        .then(data => {
-            const orderTableBody = document.getElementById('orderTableBody');
-            data.forEach(order => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Fetch orders from JSON file
+      fetch("orders.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const orderTableBody = document.getElementById("orderTableBody");
+          data.forEach((order) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
                     <td>${order.orderNumber}</td>
-                    <td>${order.items.join(', ')}</td>
+                    <td>${order.items.join(", ")}</td>
                     <td>${order.status}</td>
                     <td>${order.date}</td>
                 `;
-                orderTableBody.appendChild(row);
-            });
+            orderTableBody.appendChild(row);
+          });
         })
-        .catch(error => console.error('Error fetching orders:', error));
-</script>
-<script>
-          // Fetch order history from JSON file
-          fetch('orderHistory.json')
-            .then(response => response.json())
-            .then(data => {
-                const orderHistoryTableBody = document.getElementById('orderHistoryTableBody');
-                data.forEach(order => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
+        .catch((error) => console.error("Error fetching orders:", error));
+    </script>
+    <script>
+      // Fetch order history from JSON file
+      fetch("orderHistory.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const orderHistoryTableBody = document.getElementById(
+            "orderHistoryTableBody"
+          );
+          data.forEach((order) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
                         <td>${order.orderId}</td>
-                        <td>${order.items.join(', ')}</td>
+                        <td>${order.items.join(", ")}</td>
                         <td>${order.status}</td>
                         <td>${order.date}</td>
-                        <td><a href="productReview.html?orderId=${order.orderId}">Leave Review</a></td>
-                        <td><a href="artisanReview.html?orderId=${order.orderId}">Leave Review</a></td>
+                        <td><a href="productReview.html?orderId=${
+                          order.orderId
+                        }">Leave Review</a></td>
+                        <td><a href="artisanReview.html?orderId=${
+                          order.orderId
+                        }">Leave Review</a></td>
                     `;
-                    orderHistoryTableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching order history:', error));
-</script>
-
-</body>
+            orderHistoryTableBody.appendChild(row);
+          });
+        })
+        .catch((error) =>
+          console.error("Error fetching order history:", error)
+        );
+    </script>
+  </body>
 </html>
