@@ -26,69 +26,70 @@
     <title>MYHeritage - Cart</title>
 
     <style>
-      h1 {
+        h1 {
         font-weight: 500;
         color: black;
         margin-top: 40px;
         margin-bottom: 10px;
-      }
+        }
 
-      thead {
-        font-family: "DM Serif Display", sans-serif; /* Customize font family for thead */
-        font-size: 16px; /* Set font size for thead */
-        color: #444; /* Set font color for thead */
-      }
+        thead {
+            font-family: "DM Serif Display", sans-serif; /* Customize font family for thead */
+            font-size: 16px; /* Set font size for thead */
+            color: #444; /* Set font color for thead */
+        }
 
-      table td {
-        padding: 0.5rem; /* Default padding for all table cells */
-        vertical-align: middle; /* Center content vertically */
-        line-height: 2; /* Default line height */
-      }
+        table td {
+            padding: 0.5rem; /* Default padding for all table cells */
+            vertical-align: middle; /* Center content vertically */
+            line-height: 2; /* Default line height */
+        }
 
-      .total-cell {
-        padding: 1rem; /* More padding for the cell containing the total */
-      }
+        .total-cell {
+            padding: 1rem; /* More padding for the cell containing the total */
+        }
 
-      tbody {
-        font-family: "DM Serif Display", sans-serif; /* Different font for tbody */
-        font-size: 14px; /* Different font size for tbody */
-        color: #333; /* Different font color for tbody */
-      }
+        tbody {
+            font-family: "DM Serif Display", sans-serif;/* Different font for tbody */
+            font-size: 14px; /* Different font size for tbody */
+            color: #333; /* Different font color for tbody */
+        }
 
-      .small-button {
-        padding: 0.5rem; /* Reduce top and bottom padding */
-        border-radius: 50%; /* Ensure buttons remain round */
-        height: auto; /* Remove any fixed height */
-        display: flex; /* Ensure consistent alignment */
-        justify-content: center; /* Center content */
-        align-items: center; /* Align content vertically */
-      }
+        .small-button {
+            padding: 0.5rem;/* Reduce top and bottom padding */
+            border-radius: 50%;      /* Ensure buttons remain round */
+            height: auto;            /* Remove any fixed height */
+            display: flex;    /* Ensure consistent alignment */
+            justify-content: center; /* Center content */
+            align-items: center;     /* Align content vertically */
+        }
 
-      .medium-button {
-        padding: 0.7rem 1.2rem; /* Increase left and right padding for width */
-        border-radius: 50%; /* Maintain rounded corners (can adjust if needed) */
-        height: auto; /* Remove fixed height to allow flexibility */
-        display: flex; /* Ensure consistent alignment */
-        justify-content: center; /* Center content horizontally */
-        align-items: center; /* Align content vertically */
-        background-color: white;
-      }
+        .medium-button {
+            padding: 0.7rem 1.2rem; /* Increase left and right padding for width */
+            border-radius: 50%;    /* Maintain rounded corners (can adjust if needed) */
+            height: auto;          /* Remove fixed height to allow flexibility */
+            display: flex;         /* Ensure consistent alignment */
+            justify-content: center; /* Center content horizontally */
+            align-items: center;     /* Align content vertically */
+            background-color: white;
+        }
 
-      .small-icon {
-        font-size: 0.7rem; /* Adjust icon size */
-      }
+        .small-icon {
+            font-size: 0.7rem;       /* Adjust icon size */
+        }
 
-      .form-control-sm {
-        width: 40px; /* Narrower input box */
-        padding: 0.2rem; /* Reduced padding */
-        font-size: 0.8rem; /* Smaller font */
-      }
+        .form-control-sm {
+            width: 40px; /* Narrower input box */
+            padding: 0.2rem; /* Reduced padding */
+            font-size: 0.8rem; /* Smaller font */
+        }
 
-      .input-group {
-        display: flex; /* Flexbox for alignment */
-        align-items: center; /* Vertical alignment */
-        gap: 0.3rem; /* Space between elements */
-      }
+        .input-group {
+            display: flex; /* Flexbox for alignment */
+            align-items: center; /* Vertical alignment */
+            gap: 0.3rem; /* Space between elements */
+        }
+
     </style>
   </head>
 
@@ -102,266 +103,255 @@
       type="text/javascript"
     ></script>
 
-    <!-- Start Header/Navigation -->
-    <nav
-      class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
-      arial-label="MYHeritage navigation bar"
-    >
-      <div class="container">
-        <a class="navbar-brand" href="index.html"
-          >MyHeritage
-          <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
+<!-- Start Header/Navigation -->
+<nav
+class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
+arial-label="MYHeritage navigation bar"
+>
+<div class="container">
+  <a class="navbar-brand" href="index.html"
+    >MyHeritage
+    <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarsFurni"
+    aria-controls="navbarsFurni"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsFurni">
+    <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+      <li><a class="nav-link" href="index.html">Home</a></li>  
+      <li><a class="nav-link" href="#">Shop</a></li>
+      <li><a class="nav-link" href="#">Artisans</a></li>
+      <li><a class="nav-link" href="#">About Us</a></li>
+      <li><a class="nav-link" href="#">Contact us</a></li>
+    </ul>
+
+    <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+      <li>
+        <a class="nav-link" href="userSignIn.html"
+          ><i class="bx bx-user"></i
+        ></a>
+        <!-- <div id="user-button"></div> -->
+        <li class="active-page"> <!-- This indicates the active state -->
+            <a class="nav-link" href="cart.html">
+              <i class="bx bx-cart"></i>
+            </a>
+          </li>
+     <li>
+        <a
+          class="nav-link"
+          href="userSignIn.html"
+          style="color: #3b5d50; padding: 10px"
+          >Sign In
         </a>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>
+<!-- End Header/Navigation -->
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarsFurni"
-          aria-controls="navbarsFurni"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<!-- Cart Page Start -->
 
-        <div class="collapse navbar-collapse" id="navbarsFurni">
-          <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-            <li><a class="nav-link" href="index.html">Home</a></li>
-            <li><a class="nav-link" href="#">Shop</a></li>
-            <li><a class="nav-link" href="#">Artisans</a></li>
-            <li><a class="nav-link" href="#">About Us</a></li>
-            <li><a class="nav-link" href="#">Contact us</a></li>
-          </ul>
-
-          <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-            <li>
-              <a class="nav-link" href="userSignIn.html"
-                ><i class="bx bx-user"></i
-              ></a>
-              <!-- <div id="user-button"></div> -->
-            </li>
-
-            <li class="active-page">
-              <!-- This indicates the active state -->
-              <a class="nav-link" href="cart.html">
-                <i class="bx bx-cart"></i>
-              </a>
-            </li>
-            <li>
-              <a
-                class="nav-link"
-                href="userSignIn.html"
-                style="color: #3b5d50; padding: 10px"
-                >Sign In
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- End Header/Navigation -->
-
-    <!-- Cart Page Start -->
-
-    <div class="container">
-      <h1>Cart</h1>
-    </div>
+<div class = "container">
+    <h1>Cart</h1>
+</div>
 
     <!-- Display the total cart value -->
-    <div class="container">
-      <div class="d-flex justify-content-end">
-        <p id="cart-total" class="h4">Total: RM0.00</p>
-      </div>
+    <div class = "container">
+        <div class="d-flex justify-content-end">
+            <p id="cart-total" class="h4">Total: RM0.00</p>
+        </div>
     </div>
 
     <!-- Cart table -->
     <div class="container-fluid py-2 mb-5">
-      <div class="container py-2 mb-5">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Products</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-                <th scope="col">Remove</th>
-              </tr>
-            </thead>
+        <div class="container py-2 mb-5">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Products</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
 
-            <tbody>
-              <!-- Example row -->
-              <tr data-row-id="1">
-                <th scope="row">
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="media/heroPattern.png"
-                      class="img-fluid me-5 rounded-circle"
-                      style="width: 80px; height: 80px"
-                      alt=""
-                    />
-                  </div>
-                </th>
+                    <tbody>
+                        <!-- Example row -->
+                        <tr data-row-id="1">
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="media/heroPattern.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                </div>
+                            </th>
 
-                <td>AKSARA Batik</td>
+                            <td>AKSARA Batik</td>
 
-                <td>RM50.00</td>
+                            <td>RM50.00</td>
 
-                <td>
-                  <div class="input-group" style="width: fit-content">
-                    <div class="input-group-prepend">
-                      <button class="btn small-button border" id="decrease-btn">
-                        <i class="fa fa-minus small-icon"></i>
-                      </button>
-                    </div>
+                            <td>
+                                <div class="input-group" style="width:fit-content;">
 
-                    <input
-                      type="text"
-                      class="form-control-sm text-center"
-                      value="1"
-                      id="product-quantity"
-                    />
+                                    <div class="input-group-prepend">
+                                        <button class="btn small-button border" id="decrease-btn">
+                                            <i class="fa fa-minus small-icon"></i>
+                                        </button>
+                                    </div>
 
-                    <div class="input-group-append">
-                      <button class="btn small-button border" id="increase-btn">
-                        <i class="fa fa-plus small-icon"></i>
-                      </button>
-                    </div>
-                  </div>
-                </td>
+                                    <input type="text" class="form-control-sm text-center" value="1" id="product-quantity"/>
+                                    
+                                    <div class="input-group-append">
+                                        <button class="btn small-button border" id="increase-btn">
+                                            <i class="fa fa-plus small-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
 
-                <td>RM50.00</td>
+                            <td>RM50.00</td>
 
-                <td>
-                  <button class="btn bg-light medium-button" id="remove-btn">
-                    <i class="fa fa-times text-danger"></i>
-                  </button>
-                </td>
-              </tr>
-              <!-- Additional rows can be added dynamically or statically -->
-            </tbody>
-          </table>
+                            <td>
+                                <button class="btn bg-light medium-button" id="remove-btn" >
+                                    <i class="fa fa-times text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Additional rows can be added dynamically or statically -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
 
-    <!-- Start Footer Section -->
-    <footer class="footer-section">
-      <div class="container relative">
-        <div class="sofa-img">
-          <img src="media/MyHeritageHI.png" alt="Image" class="img-fluid" />
-        </div>
+<!-- Start Footer Section -->
+<footer class="footer-section">
+    <div class="container relative">
+      <div class="sofa-img">
+        <img src="media/MyHeritageHI.png" alt="Image" class="img-fluid" />
+      </div>
 
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="subscription-form">
-              <h3 class="d-flex align-items-center">
-                <span class="me-1"><i class="bx bx-envelope"></i></span
-                ><span>Subscribe to Newsletter</span>
-              </h3>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center">
+              <span class="me-1"><i class="bx bx-envelope"></i></span
+              ><span>Subscribe to Newsletter</span>
+            </h3>
 
-              <form action="#" class="row g-3">
-                <div class="col-auto">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div class="col-auto">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div class="col-auto">
-                  <button class="btn">
-                    <span class="fa fa-paper-plane"></span>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="row g-5 mb-5">
-          <div class="col-lg-4">
-            <div class="mb-4 footer-logo-wrap">
-              <a href="#" class="footer-logo">MyHeritage<span>.</span></a>
-            </div>
-            <p class="mb-4">
-              Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio
-              quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-              vulputate velit imperdiet dolor tempor tristique. Pellentesque
-              habitant
-            </p>
-
-            <ul
-              class="list-unstyled custom-social d-flex justify-content-start"
-            >
-              <li>
-                <a href="#"><span class="fa fa-brands fa-facebook-f"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="fa fa-brands fa-twitter"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="fa fa-brands fa-instagram"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="fa fa-brands fa-linkedin"></span></a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-lg-8">
-            <div class="row links-wrap justify-content-end">
-              <div class="col-6 col-sm-6 col-md-3">
-                <ul class="list-unstyled">
-                  <li><a href="#">About us</a></li>
-                  <li><a href="#">Shop</a></li>
-                  <li><a href="#">Artisans</a></li>
-                  <li><a href="#">Contact us</a></li>
-                </ul>
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter your name"
+                />
               </div>
-
-              <div class="col-6 col-sm-6 col-md-3">
-                <ul class="list-unstyled">
-                  <li><a href="#">Support</a></li>
-                  <li><a href="#">FAQs</a></li>
-                </ul>
+              <div class="col-auto">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                />
               </div>
-            </div>
+              <div class="col-auto">
+                <button class="btn">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
+      </div>
 
-        <div class="border-top copyright">
-          <div class="row pt-4">
-            <div class="col-lg-6">
-              <p class="mb-2 text-center text-lg-start">
-                Copyright &copy;
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                . All Rights Reserved. &mdash; MyHeritage
-              </p>
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap">
+            <a href="#" class="footer-logo">MyHeritage<span>.</span></a>
+          </div>
+          <p class="mb-4">
+            Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio
+            quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
+            vulputate velit imperdiet dolor tempor tristique. Pellentesque
+            habitant
+          </p>
+
+          <ul
+            class="list-unstyled custom-social d-flex justify-content-start"
+          >
+            <li>
+              <a href="#"><span class="fa fa-brands fa-facebook-f"></span></a>
+            </li>
+            <li>
+              <a href="#"><span class="fa fa-brands fa-twitter"></span></a>
+            </li>
+            <li>
+              <a href="#"><span class="fa fa-brands fa-instagram"></span></a>
+            </li>
+            <li>
+              <a href="#"><span class="fa fa-brands fa-linkedin"></span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap justify-content-end">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Artisans</a></li>
+                <li><a href="#">Contact us</a></li>
+              </ul>
             </div>
 
-            <div class="col-lg-6 text-center text-lg-end">
-              <ul class="list-unstyled d-inline-flex ms-auto">
-                <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
-                <li><a href="#">Privacy Policy</a></li>
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">FAQs</a></li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-    </footer>
-    <!-- End Footer Section -->
 
-    <script src="resources/js/cart.js"></script>
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; MyHeritage
+            </p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer Section -->
+
+  <script src="resources/js/cart.js"></script>
+
   </body>
-</html>
+  </html>

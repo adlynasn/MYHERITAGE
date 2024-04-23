@@ -1,3 +1,9 @@
+/* Template: Tivo - SaaS App HTML Landing Page Template
+   Author: Inovatik
+   Created: Sep 2019
+   Description: Custom JS file
+*/
+
 (function ($) {
   "use strict";
 
