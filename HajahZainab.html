@@ -16,8 +16,9 @@
     <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <link href="resources/css/tiny-slider.css" rel="stylesheet" />
-    <link href="resources/css/styleArtisan.css" rel="stylesheet" />
-    <title>MyHeritage - Artisans</title> 
+    <link href="resources/css/styleProfile.css" rel="stylesheet" />
+    <title>MyHeritage - Artisans</title>
+      
 </head>
 
 <body>
@@ -44,11 +45,11 @@
 
             <div class="collapse navbar-collapse" id="navbarsFurni">
                 <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                    <li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li><a class="nav-link" href="#">Shop</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="#">Artisans</a></li>
+                    <li><a class="nav-link" href="#">Artisans</a></li>
                     <li><a class="nav-link" href="#">About Us</a></li>
                     <li>
                         <a class="nav-link" href="homeContactUs.html">Contact us</a>
@@ -72,70 +73,98 @@
         </div>
     </nav>
     <!-- End Header/Navigation -->
+    </header>
+    <section class="blog-post">
+        <div style="display: flex; margin-bottom: 60px; padding: 8px;">
+            <div>
+                <img src="media/artisanPortfolio/hajah-zainab-small.jpg" alt="Artisan Portrait" class="artisan-image">
+            </div>
+            <div class="artisan-info">
+                <h2>Hajah Zainab @ Ngah binti Mamat</h2>
+                <div class="artisan-description">
+                    <p>She is highly skilled in the manufacture of batik terap with the processing of layered block
+                        batik
+                        technique, batik laksam technique, conteng, discharge, retak seribu and rainbow.</p>
+                </div>
+            </div>
+        </div>
+        <div class="artisan gallery-photos">
+            <h2>GALLERY</h2>
+            <img src="media/artisanGallery/DSC_0832.JPG" alt="[Product 1 Name]" class="product-photo">
+            <img src="media/artisanGallery/hajah-zainab-header-02.jpg" alt="[Product 2 Name]" class="product-photo">
+            <img src="media/artisanGallery/hajah-zainab-header2.jpg" alt="[Product 3 Name]" class="product-photo">
+        </div>
 
-    <section class="artisan" style="margin-left: 40px;">
-        <h2>ARTISAN PORTFOLIO</h2>
-        <h3>Textiles</h3>
-    </section>
+        <!-- Contact Section -->
+        <div id="contact">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Contact Information / Commission Requests</h2>
+                    <hr />
+                </div>
+                <div id="columnRow" class="row">
+                    <div class="col-md-4" id="contactUsHome">
+                        <h3>Contact Info</h3>
+                        <div class="contact-item">
+                            </p>
+                        </div>
+                        <div class="contact-item">
+                            <span>Email</span>
+                            <p>zainab@gmail.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <span>Phone</span>
+                            <p>+6012 345 6789</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>Leave us a message</h3>
+                        <form name="sentMessage" id="contactForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" id="name" class="form-control" placeholder="Name"
+                                            required="required" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" id="email" class="form-control" placeholder="Email"
+                                            required="required" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" id="message" class="form-control" rows="4"
+                                    placeholder="Message" required></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-custom btn-lg">
+                                Send Message
+                            </button>
+                        </form>
 
-    <div class="portfolio-items">
-        <article class="portfolio-item">
-            <a href="HajahZainab.html">
-                <img src="media/artisanPortfolio/hajah-zainab-small.jpg" alt="Click to go to Page 1" />
-            </a>
-            <h3>Hajah Zainab @ Ngah binti Mamat</h3>
-            <p>Batik Terap/Blok</p>
-        </article>
 
-        <article class="portfolio-item">
-            <a href="artisanProfile2.html">
-                <img src="media/artisanPortfolio/azizah2.jpg" alt="Click to go to Page 2" />
-            </a>
-            <h3>Hajah Azizah binti Mohamad Yusof</h3>
-            <p>Tekatan Benang Emas</p>
-        </article>
+                    </div>
+                    <section class="social-media">
+                        <h2>Follow Me</h2>
+                        <ul class="social-links">
+                            <li><a href="https://www.instagram.com/yourusername"><i class="fab fa-instagram"></i>
+                                    Instagram</a></li>
+                            <li><a href="https://www.facebook.com/yourusername"><i class="fab fa-facebook-f"></i>
+                                    Facebook</a></li>
+                            <li><a href="https://www.pinterest.com/yourusername"><i class="fab fa-pinterest-p"></i>
+                                    Pinterest</a></li>
+                        </ul>
+                    </section>
 
-        <article class="portfolio-item">
-            <a href="artisanProfile3.html">
-                <img src="media/artisanPortfolio/nortipah-1-uai-258x230.jpg" alt="Click to go to Page 3" />
-            </a>
-            <h3> Hajah Natipah @ Nortipah binti Abdul Kadir</h3>
-            <p>Tenun Pahang Diraja</p>
-        </article>
-    </div>
-
-
-
-    <section class="artisan" style="margin-left: 40px;">
-        <h3>Soil Products</h3>
-    </section>
-    <div class="portfolio-items">
-        <article class="portfolio-item">
-            <a href="Ramadas.html">
-                <img src="media/artisanPortfolio/ramadesh-1.jpg" alt="Click to go to Page 4" />
-            </a>
-            <h3>V.N Ramadas a/l Vengdasalam</h3>
-            <p>Seramik</p>
-        </article>
-
-        <article class="portfolio-item">
-            <a href="KamarulFaizy.html">
-                <img src="media/artisanPortfolio/Screenshot-2024-01-24-at-6.21.00-PM-uai-193x258.png"
-                    alt="Click to go to Page 5" />
-            </a>
-            <h3>Kamarul Faizy bin Roslan</h3>
-            <p>Kaca Kristal</p>
-        </article>
-
-        <article class="portfolio-item">
-            <a href="artisanProfile6.html">
-                <img src="media/artisanPortfolio/Zulkafly1-uai-258x302.jpg" alt="Click to go to Page 6" />
-            </a>
-            <h3>Zulkafly bin Pandak Bedin</h3>
-            <p>Tembikar</p>
-        </article>
-    </div>
-
+                </div>
+            </div>
+        </div>
+        </div>
     </section>
     <!-- Start Footer Section -->
     <footer class="footer-section">
@@ -148,8 +177,7 @@
                 <div class="col-lg-8">
                     <div class="subscription-form">
                         <h3 class="d-flex align-items-center">
-                            <span class="me-1"><i class="bx bx-envelope"></i></span><span>Subscribe to
-                                Newsletter</span>
+                            <span class="me-1"><i class="bx bx-envelope"></i></span><span>Subscribe to Newsletter</span>
                         </h3>
 
                         <form action="#" class="row g-3">
