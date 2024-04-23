@@ -31,6 +31,9 @@ a.more {
   font-weight: 600;
 }
 /* Nav Bar */
+/* .navbar-toggler-awesome.fas.fa-bars {
+  color: #3b5d50; /* Desired color */
+/* } */
 
 .custom-navbar {
   background: white !important;
@@ -44,6 +47,9 @@ a.more {
   font-weight: 100;
   color: #3b5d50;
 }
+/* .custom-navbar-toggler-icon {
+  color: #3b5d50; /* Change this to your desired color 
+} */
 
 .custom-navbar .navbar-brand img {
   width: 100%;
@@ -131,6 +137,52 @@ a.more {
   color: #3b5d50;
   font-size: 20px;
   padding: 5px;
+}
+
+.menu-icon-green {
+  color: #3b5d50;
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .menu-icon-green {
+    font-size: 20px; /* Smaller size for mobile screens */
+  }
+}
+
+/* Mobile Menu Styles */
+@media (max-width: 768px) {
+  .custom-navbar .collapse {
+    z-index: 9999; /* Set a high z-index */
+    position: absolute; /* Position as absolute to ensure it doesn't push content down */
+    top: 100%; /* Position it below the navbar */
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Background color */
+    border: 1px solid #e5e5e5; /* Border */
+    border-top: none; /* Remove top border */
+    padding-left: 30px;
+  }
+
+  .custom-navbar .collapse ul {
+    padding: 10px 0; /* Adjust padding */
+  }
+
+  .custom-navbar .collapse li {
+    margin-bottom: 10px; /* Adjust margin */
+  }
+}
+
+.active-page a {
+  position: relative;
+  border-bottom: 5px solid #cda274;
+  padding-bottom: 0px;
+  opacity: 1;
+}
+
+.active-page a i {
+  font-weight: bold;
+  color: #000000;
 }
 
 /* Hero Section */
@@ -1051,6 +1103,7 @@ textarea {
   font-family: "DM Serif Display", sans-serif;
 }
 
+
 /* ContactUs */
 
 .wrapper {
@@ -1113,3 +1166,4 @@ textarea {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0;
 }
+
