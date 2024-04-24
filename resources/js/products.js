@@ -74,12 +74,13 @@ for (let i of products.data) {
   // Container
   let container = document.createElement("div");
   container.classList.add("container");
+
   // Product name
   let name = document.createElement("h5");
   name.classList.add("product-name");
   name.innerText = i.productName.toUpperCase();
   container.appendChild(name);
-  //desctiprion
+  //description
   let description = document.createElement("p");
   description.innerText = i.description;
   container.appendChild(description);
@@ -87,16 +88,23 @@ for (let i of products.data) {
   let price = document.createElement("h6");
   price.innerText = "RM" + i.price;
   container.appendChild(price);
-  card.appendChild(container);
-
+  
   //add-to card button
   let button = document.createElement("button");
   button.classList.add("add-to-cart");
   button.innerText = "Add to cart";
   container.appendChild(button);
+  
+  card.appendChild(container);
 
-  document.getElementById("products").appendChild(card);
+  // Append anchor tag to the card
+  let anchor = document.createElement("a");
+  anchor.setAttribute("href", "singularproduct.html"); // Replace "product_details.html" with the URL of your product details page
+  anchor.style.display = "block"; // Set display property to block
+  anchor.appendChild(card); // Append the card to the anchor tag
+  document.getElementById("products").appendChild(anchor);
 }
+
 
 //parameter passes from button(same as category)
 function filterProduct(value) {
