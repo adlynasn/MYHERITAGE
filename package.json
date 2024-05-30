@@ -2,7 +2,6 @@
   "name": "myheritage",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,6 +14,12 @@
     "@clerk/clerk-js": "^4.71.4",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
     "swiper": "^11.1.1"
-  }
+  },
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
