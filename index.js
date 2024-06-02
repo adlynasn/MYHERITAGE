@@ -30,5 +30,3 @@ app.use(errorHandler);
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running at PORT ${PORT}`);
-
-const mongoose = require('mongoose');
