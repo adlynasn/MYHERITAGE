@@ -1,4 +1,5 @@
 const{Category}=require('../models/category');
+const{Category}=require('MYHERITAGE\resources\js\category.js');
 const express=require('express');
 const router=express.Router();
 
