@@ -30,7 +30,7 @@
     <link href="resources/css/swiper.css" rel="stylesheet" />
     <link href="resources/css/magnific-popup.css" rel="stylesheet" />
 
-    <title>MYHeritage - Sign In</title>
+    <title>MYHeritage - Sign Up</title>
   </head>
   <body>
     <script type="module" src="resources/js/signIn.js"></script>
@@ -114,7 +114,6 @@
     </nav>
     <!-- End Header/Navigation -->
 
-    <!-- Header -->
     <header id="header" class="ex-2-header">
       <div class="container">
         <div class="row">
@@ -126,80 +125,67 @@
             </p>
             <!-- Sign Up Form -->
             <div class="form-container">
-              <form id="logInForm" data-toggle="validator" data-focus="false">
+              <form id="signUpForm">
+                <h5>First Name</h5>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control-input"
+                    placeholder="First Name"
+                    id="firstname"
+                    required
+                  />
+                </div>
+                <h5>Last Name</h5>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control-input"
+                    placeholder="Last Name"
+                    id="lastname"
+                    required
+                  />
+                </div>
                 <h5>Email</h5>
                 <div class="form-group">
                   <input
                     type="email"
                     class="form-control-input"
-                    id="lemail"
+                    id="email"
                     placeholder="Email"
                     required
                   />
-                  <div class="help-block with-errors"></div>
                 </div>
-                <h5>Name</h5>
-
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control-input"
-                    placeholder="Password"
-                    id="luserName"
-                    required
-                  />
-                  <div class="help-block with-errors"></div>
-                </div>
-
-                <h5>Address</h5>
-
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control-input"
-                    placeholder="Address"
-                    id="luserAddress"
-                    required
-                  />
-                  <div class="help-block with-errors"></div>
-                </div>
-
                 <h5>Contact Number</h5>
-
                 <div class="form-group">
                   <input
                     type="text"
                     class="form-control-input"
                     placeholder="Contact Number"
-                    id="lcontactNumber"
+                    id="mobile"
                     required
                   />
                 </div>
-
                 <h5>Password</h5>
-
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control-input"
+                    placeholder="Password"
+                    id="password"
+                    required
+                  />
+                </div>
+                <h5>Address</h5>
                 <div class="form-group">
                   <input
                     type="text"
                     class="form-control-input"
-                    placeholder="Password"
-                    id="lpassword"
+                    placeholder="Address"
+                    id="address"
                     required
                   />
-                  <div class="help-block with-errors"></div>
                 </div>
-
-                <div class="form-group checkbox" id="checkBox-form-group">
-                  <input
-                    type="checkbox"
-                    id="sterms"
-                    value="Agreed-to-Terms"
-                    required
-                  />
-                  <label>I Agree to the Terms</label>
-                  <div class="help-block with-errors"></div>
-                </div>
-
                 <div class="form-group">
                   <button type="submit" class="form-control-submit-button">
                     SIGN UP
@@ -210,34 +196,45 @@
                 </div>
               </form>
             </div>
-            <!-- end of form container -->
-            <!-- end of sign up form -->
           </div>
-          <!-- end of col -->
         </div>
-        <!-- end of row -->
       </div>
-      <!-- end of container -->
     </header>
-    <!-- end of ex-header -->
-    <!-- end of header -->
-
     <!-- Scripts -->
-    <script src="resources/js/jquery.min.js"></script>
-    <!-- jQuery for Bootstrap's JavaScript plugins -->
-    <script src="resources/js/popper.min.js"></script>
-    <!-- Popper tooltip library for Bootstrap -->
-    <script src="resources/js/bootstrap.min.js"></script>
-    <!-- Bootstrap framework -->
-    <script src="resources/js/jquery.easing.min.js"></script>
-    <!-- jQuery Easing for smooth scrolling between anchors -->
-    <script src="resources/js/swiper.min.js"></script>
-    <!-- Swiper for image and text sliders -->
-    <script src="resources/js/jquery.magnific-popup.js"></script>
-    <!-- Magnific Popup for lightboxes -->
-    <script src="resources/js/validator.min.js"></script>
-    <!-- Validator.js - Bootstrap plugin that validates forms -->
-    <script src="resources/js/scripts.js"></script>
-    <!-- Custom scripts -->
+    <script>
+      document
+        .getElementById("signUpForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const userData = {
+            email: document.getElementById("email").value,
+            firstname: document.getElementById("firstname").value,
+            lastname: document.getElementById("lastname").value,
+            mobile: document.getElementById("mobile").value,
+            password: document.getElementById("password").value,
+            address: document.getElementById("address").value,
+            role: "user",
+          };
+
+          try {
+            const response = await fetch("/addUser", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            });
+
+            if (response.ok) {
+              console.log("User added successfully!");
+            } else {
+              console.error("Failed to add user.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+    </script>
   </body>
 </html>
