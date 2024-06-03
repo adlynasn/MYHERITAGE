@@ -2,6 +2,10 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 const bodyParser = require("body-parser");
 const path = require("path");
+const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -39,6 +43,30 @@ app.post("/addUser", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding user");
+  } finally {
+    await client.close();
+  }
+});
+
+app.post("/loginUser", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("users");
+
+    const user = await collection.findOne({ email: req.body.email });
+
+    if (user && user.password === req.body.password) {
+      // Remember to hash passwords
+      res.json({ success: true });
+    } else {
+      res.json({ success: false, message: "Invalid email or password" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error logging in user");
   } finally {
     await client.close();
   }

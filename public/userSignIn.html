@@ -33,15 +33,6 @@
     <title>MYHeritage - Sign In</title>
   </head>
   <body>
-    <script type="module" src="resources/js/signIn.js"></script>
-    <script
-      async
-      crossorigin="anonymous"
-      data-clerk-publishable-key="pk_test_c2V0dGxlZC1taW5ub3ctNjAuY2xlcmsuYWNjb3VudHMuZGV2JA"
-      src="https://settled-minnow-60.clerk.accounts.dev/npm/@clerk/clerk-js@4/dist/clerk.browser.js"
-      type="text/javascript"
-    ></script>
-
     <!-- Preloader -->
     <div class="spinner-wrapper">
       <div class="spinner">
@@ -58,11 +49,7 @@
       arial-label="MYHeritage navigation bar"
     >
       <div class="container">
-        <a class="navbar-brand" href="index.html"
-          >MyHeritage
-          <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
-        </a>
-
+        <a class="navbar-brand" href="index.html">MyHeritage</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -77,13 +64,13 @@
 
         <div class="collapse navbar-collapse" id="navbarsFurni">
           <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-            <li>
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
+            <li><a class="nav-link" href="index.html">Home</a></li>
             <li><a class="nav-link" href="#">Shop</a></li>
             <li><a class="nav-link" href="artisan.html">Artisans</a></li>
             <li><a class="nav-link" href="homeAboutUs.html">About Us</a></li>
-            <li><a class="nav-link" href="homeContactUs.html">Contact us</a></li>
+            <li>
+              <a class="nav-link" href="homeContactUs.html">Contact us</a>
+            </li>
           </ul>
 
           <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -91,15 +78,19 @@
               <a class="nav-link" href="userAccount.html"
                 ><i class="bx bx-user"></i
               ></a>
-              <!-- <div id="user-button"></div> -->
             </li>
             <li>
-              <a class="nav-link" href="cart.html"><i class="bx bx-cart"></i></a>
+              <a class="nav-link" href="cart.html"
+                ><i class="bx bx-cart"></i
+              ></a>
             </li>
             <li>
-              <a class="nav-link" href="userSignIn.html" style="color: #3b5d50;
-              padding: 10px;" >Sign In
-              </a>
+              <a
+                class="nav-link"
+                href="userSignIn.html"
+                style="color: #3b5d50; padding: 10px"
+                >Sign In</a
+              >
             </li>
           </ul>
         </div>
@@ -119,62 +110,22 @@
             </p>
             <p>
               Forgot your password? Then please
-              <a class="white" href="userForgotPassword.html">Forgot Password</a>
+              <a class="white" href="userForgotPassword.html"
+                >Forgot Password</a
+              >
             </p>
             <!-- Sign Up Form -->
             <div class="form-container">
-              <form id="logInForm" data-toggle="validator" data-focus="false">
-                <h5>Email</h5>
-                <div class="form-group">
-                  <input
-                    type="email"
-                    class="form-control-input"
-                    id="lemail"
-                    placeholder="Email"
-                    required
-                  />
-                  <div class="help-block with-errors"></div>
-
-                </div>
-
-                <h5>Password</h5>
-
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control-input"
-                    placeholder="Password"
-                    id="lpassword"
-                    required
-                  />
-                  <div class="help-block with-errors"></div>
-
-                </div>
-
-                <div class="form-group">
-                  <button type="submit" class="form-control-submit-button">
-                    SIGN IN
-                  </button>
-                </div>
-                <div class="form-message">
-                  <div id="lmsgSubmit" class="h3 text-center hidden"></div>
-                </div>
+              <form id="logInForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+                <br />
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+                <br />
+                <button type="submit">Log In</button>
               </form>
             </div>
-
-                </div>
-                </div>
-
-                <!-- <div class="form-group">
-                  <button type="submit" class="form-control-submit-button">
-                    SIGN IN
-                  </button>
-                </div>
-                <div class="form-message">
-                  <div id="lmsgSubmit" class="h3 text-center hidden"></div>
-                </div>
-              </form>
-            </div> -->
             <!-- end of form container -->
             <!-- end of sign up form -->
           </div>
@@ -204,5 +155,41 @@
     <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="resources/js/scripts.js"></script>
     <!-- Custom scripts -->
+
+    <script>
+      document
+        .getElementById("logInForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const loginData = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+          };
+
+          try {
+            const response = await fetch("/loginUser", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(loginData),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              alert("Successfully Logged In!");
+              window.location.href = "index.html";
+            } else {
+              alert(
+                result.message || "Invalid email or password. Please try again."
+              );
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+    </script>
   </body>
 </html>
