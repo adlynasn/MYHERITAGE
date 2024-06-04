@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="media/MYHeritage_Brand.png" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/492c1b6f9c.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!--Bootstrap-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="resources/css/tiny-slider.css" rel="stylesheet" />
+    <link href="resources/css/styleUser.css" rel="stylesheet" />
+    <link href="resources/css/swiper.css" rel="stylesheet" />
+    <link href="resources/css/magnific-popup.css" rel="stylesheet" />
+
+    <title>MYHeritage - Sign In</title>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <div class="spinner-wrapper">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <!-- end of preloader -->
+
+    <!-- Start Header/Navigation -->
+    <nav
+      class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
+      arial-label="MYHeritage navigation bar"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html">MyHeritage</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsFurni"
+          aria-controls="navbarsFurni"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+          <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="#">Shop</a></li>
+            <li><a class="nav-link" href="artisan.html">Artisans</a></li>
+            <li><a class="nav-link" href="homeAboutUs.html">About Us</a></li>
+            <li>
+              <a class="nav-link" href="homeContactUs.html">Contact us</a>
+            </li>
+          </ul>
+
+          <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+            <li>
+              <a class="nav-link" href="userAccount.html"
+                ><i class="bx bx-user"></i
+              ></a>
+            </li>
+            <li>
+              <a class="nav-link" href="cart.html"
+                ><i class="bx bx-cart"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                href="userSignIn.html"
+                style="color: #3b5d50; padding: 10px"
+                >Sign In</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Header/Navigation -->
+
+    <!-- Header -->
+    <header id="header" class="ex-2-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Log In</h1>
+            <p>
+              You don't have a password? Then please
+              <a class="white" href="userSignUp.html">Sign Up</a>
+            </p>
+            <p>
+              Forgot your password? Then please
+              <a class="white" href="userForgotPassword.html"
+                >Forgot Password</a
+              >
+            </p>
+            <!-- Sign Up Form -->
+            <div class="form-container">
+              <form id="logInForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+                <br />
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+                <br />
+                <button type="submit">Log In</button>
+              </form>
+            </div>
+            <!-- end of form container -->
+            <!-- end of sign up form -->
+          </div>
+          <!-- end of col -->
+        </div>
+        <!-- end of row -->
+      </div>
+      <!-- end of container -->
+    </header>
+    <!-- end of ex-header -->
+    <!-- end of header -->
+
+    <!-- Scripts -->
+    <script src="resources/js/jquery.min.js"></script>
+    <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="resources/js/popper.min.js"></script>
+    <!-- Popper tooltip library for Bootstrap -->
+    <script src="resources/js/bootstrap.min.js"></script>
+    <!-- Bootstrap framework -->
+    <script src="resources/js/jquery.easing.min.js"></script>
+    <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script src="resources/js/swiper.min.js"></script>
+    <!-- Swiper for image and text sliders -->
+    <script src="resources/js/jquery.magnific-popup.js"></script>
+    <!-- Magnific Popup for lightboxes -->
+    <script src="resources/js/validator.min.js"></script>
+    <!-- Validator.js - Bootstrap plugin that validates forms -->
+    <script src="resources/js/scripts.js"></script>
+    <!-- Custom scripts -->
+
+    <script>
+      document
+        .getElementById("logInForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const loginData = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+          };
+
+          try {
+            const response = await fetch("/loginUser", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(loginData),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              alert("Successfully Logged In!");
+              window.location.href = "index.html";
+            } else {
+              alert(
+                result.message || "Invalid email or password. Please try again."
+              );
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+    </script>
+  </body>
+</html>
