@@ -9,9 +9,8 @@ const bcrypt = require("bcrypt");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
+
 const { Product } = require('./models/productModel')
-
-
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -137,6 +136,7 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+=======
 // Error handling middlewares
 app.use(notFound);
 app.use(errorHandler);
@@ -144,6 +144,11 @@ app.use(errorHandler);
 // Start the server
 app.listen(PORT, () => {
 
+
     console.log(`Server is running at PORT ${PORT}`);
 })
+
+=======
+  console.log(`Server is running at PORT ${PORT}`);
+});
 
