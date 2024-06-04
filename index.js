@@ -115,6 +115,32 @@ app.post("/submitInquiry", async (req, res) => {
   }
 });
 
+app.get("/cart", async (req, res) => {
+    const uri =
+      "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
+    const client = new MongoClient(uri);
+  
+    try {
+      await client.connect();
+      const database = client.db("myheritageDB");
+      const collection = database.collection("cart");
+  
+      // Assuming you have only one cart data stored in the collection
+      const cart = await collection.findOne();
+  
+      if (cart) {
+        res.json({ success: true, cart });
+      } else {
+        res.json({ success: false, message: "Cart not found" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error fetching cart");
+    } finally {
+      await client.close();
+    }
+  });
+
 // Error handling middlewares
 app.use(notFound);
 app.use(errorHandler);
