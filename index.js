@@ -1,4 +1,5 @@
 const express = require("express");
+const dbConnect = require("./config/dbConnect");
 const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv").config();
 const morgan = require("morgan");
@@ -10,7 +11,7 @@ const productsRouter = require("./routes/products");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
 const app = express();
-const api = process.env.API_URL || "/api/v1";
+const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
 
 // Connect to the database
