@@ -11,6 +11,7 @@ const productsRouter = require("./routes/products");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const { Product } = require('./models/productModel')
 
+
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -115,6 +116,7 @@ app.post("/submitInquiry", async (req, res) => {
     await client.close();
   }
 });
+
 app.get('/api/products', async (req, res) => {
   await dbConnect();
 
@@ -144,3 +146,4 @@ app.listen(PORT, () => {
 
     console.log(`Server is running at PORT ${PORT}`);
 })
+
