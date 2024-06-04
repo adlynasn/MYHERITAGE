@@ -154,14 +154,14 @@
                         </div>
                         <div class="right-content">
                             <div class="quantity buttons_added">
-                                <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button" value="+" class="plus">
+                              <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" id="quantityInput" class="input-text qty text" size="4" pattern="" inputmode="">
                             </div>
                         </div>
                     </div>
                     <div class="total">
-                        <h4>Total: RM50.00</h4>
-                        <div class="main-border-button"><a href="#">Add To Cart</a></div>
-                    </div>
+                      <h4>Total: RM50.00</h4>
+                      <div class="main-border-button"><button id="addToCartBtn">Add To Cart</button></div>
+                    </div>  
                 </div>
             </div>
             </div>
@@ -169,17 +169,6 @@
     </section>
     <!-- ***** Product Area Ends ***** -->
     
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- Start Footer Section -->
     <footer class="footer-section">
@@ -302,5 +291,7 @@
   
       <script src="resources/js/tiny-slider.js"></script>
       <script src="resources/js/custom.js"></script>
+
+    </script>    
     </body>
   </html>
