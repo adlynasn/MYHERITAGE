@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="media/MYHeritage_Brand.png" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/492c1b6f9c.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!--Bootstrap-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="resources/css/tiny-slider.css" rel="stylesheet" />
+    <link href="resources/css/styleUser.css" rel="stylesheet" />
+    <link href="resources/css/swiper.css" rel="stylesheet" />
+    <link href="resources/css/magnific-popup.css" rel="stylesheet" />
+
+    <title>MYHeritage - Sign Up</title>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <!-- <div class="spinner-wrapper">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div> -->
+    <!-- end of preloader -->
+
+    <!-- Start Header/Navigation -->
+    <nav
+      class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
+      arial-label="MYHeritage navigation bar"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          >MyHeritage
+          <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsFurni"
+          aria-controls="navbarsFurni"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+          <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+            <li>
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li><a class="nav-link" href="#">Shop</a></li>
+            <li><a class="nav-link" href="artisan.html">Artisans</a></li>
+            <li><a class="nav-link" href="homeAboutUs.html">About Us</a></li>
+            <li>
+              <a class="nav-link" href="homeContactUs.html">Contact us</a>
+            </li>
+          </ul>
+
+          <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+            <li>
+              <a class="nav-link" href="userAccount.html"
+                ><i class="bx bx-user"></i
+              ></a>
+              <!-- <div id="user-button"></div> -->
+            </li>
+            <li>
+              <a class="nav-link" href="cart.html"
+                ><i class="bx bx-cart"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                href="userSignIn.html"
+                style="color: #3b5d50; padding: 10px"
+                >Sign In
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Header/Navigation -->
+
+    <header id="header" class="ex-2-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Sign Up</h1>
+            <p>
+              Already have an account? Then head over to
+              <a class="white" href="userSignIn.html">Sign In</a>
+            </p>
+            <!-- Sign Up Form -->
+            <div class="form-container">
+              <form id="signUpForm">
+                <h5>First Name</h5>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control-input"
+                    placeholder="First Name"
+                    id="firstname"
+                    required
+                  />
+                </div>
+                <h5>Last Name</h5>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control-input"
+                    placeholder="Last Name"
+                    id="lastname"
+                    required
+                  />
+                </div>
+                <h5>Email</h5>
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control-input"
+                    id="email"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+                <h5>Contact Number</h5>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control-input"
+                    placeholder="Contact Number"
+                    id="mobile"
+                    required
+                  />
+                </div>
+                <h5>Password</h5>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control-input"
+                    placeholder="Password"
+                    id="password"
+                    required
+                  />
+                </div>
+                <h5>Address</h5>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control-input"
+                    placeholder="Address"
+                    id="address"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="form-control-submit-button">
+                    SIGN UP
+                  </button>
+                </div>
+                <div class="form-message">
+                  <div id="lmsgSubmit" class="h3 text-center hidden"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Scripts -->
+
+    <!-- Notification -->
+    <div
+      id="notification"
+      style="
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: green;
+        color: white;
+        padding: 20px;
+        z-index: 1000;
+        border-radius: 5px;
+      "
+    >
+      Successfully Registered!
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      document
+        .getElementById("signUpForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const userData = {
+            email: document.getElementById("email").value,
+            firstname: document.getElementById("firstname").value,
+            lastname: document.getElementById("lastname").value,
+            mobile: document.getElementById("mobile").value,
+            password: document.getElementById("password").value,
+            address: document.getElementById("address").value,
+            role: "user",
+          };
+
+          try {
+            const response = await fetch("/addUser", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            });
+
+            if (response.ok) {
+              // Show notification
+              const notification = document.getElementById("notification");
+              notification.style.display = "block";
+
+              // Redirect to home page after 2 seconds
+              setTimeout(function () {
+                window.location.href = "index.html";
+              }, 2000);
+            } else {
+              console.error("Failed to add user.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+    </script>
+
+    <!-- <script>
+      window.addEventListener(
+        "load",
+        function () {
+          document.querySelector(".spinner-wrapper").style.display = "none";
+        },
+        1000
+      );
+    </script> -->
+  </body>
+</html>
