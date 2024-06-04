@@ -106,25 +106,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", async function() {
-  const userId = '665de9438d48ef4b168eee50'; // Replace with actual user ID
-
   try {
-    const response = await fetch(`/api/cart/${userId}`);
-    const cartData = await response.json();
+    const response = await fetch("/cart");
+    const responseData = await response.json();
 
     if (response.ok) {
-      displayCartItems(cartData.items);
-      updateCartTotal(cartData.items);
+      if (responseData.success) {
+        const cartData = responseData.cart;
+        displayCartItems(cartData.items);
+        updateCartTotal(cartData.items);
+      } else {
+        console.error("Error fetching cart:", responseData.message);
+      }
     } else {
-      console.error('Error fetching cart:', cartData.message);
+      console.error("Error fetching cart:", responseData.message);
     }
   } catch (error) {
-    console.error('Error fetching cart:', error);
+    console.error("Error fetching cart:", error);
   }
 });
 
+
+
 function displayCartItems(items) {
-  const tbody = document.querySelector('table tbody');
+  const tbody = document.getElementById('cart-items');
   tbody.innerHTML = ''; // Clear existing rows
 
   items.forEach(item => {
@@ -176,3 +181,4 @@ function updateCartTotal(items) {
   document.getElementById('cart-subtotal').textContent = `RM${subtotal.toFixed(2)}`;
   document.getElementById('cart-total').textContent = `RM${total.toFixed(2)}`;
 }
+
