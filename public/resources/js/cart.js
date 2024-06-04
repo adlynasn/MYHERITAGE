@@ -182,3 +182,5 @@ function updateCartTotal(items) {
   document.getElementById('cart-total').textContent = `RM${total.toFixed(2)}`;
 }
 
+}
+
