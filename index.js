@@ -145,10 +145,6 @@ app.use(errorHandler);
 // Start the server
 app.listen(PORT, () => {
 
-
-    console.log(`Server is running at PORT ${PORT}`);
-})
-
   console.log(`Server is running at PORT ${PORT}`);
 });
 
