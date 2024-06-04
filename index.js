@@ -12,6 +12,7 @@ const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const { Product } = require('./models/productModel')
 
 
+const { Product } = require('./models/productModel')
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -144,6 +145,10 @@ app.use(errorHandler);
 // Start the server
 app.listen(PORT, () => {
 
+
     console.log(`Server is running at PORT ${PORT}`);
 })
+
+  console.log(`Server is running at PORT ${PORT}`);
+});
 
