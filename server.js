@@ -72,6 +72,31 @@ app.post("/loginUser", async (req, res) => {
   }
 });
 
+
+app.post("/submitInquiry", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("inquiries");
+
+    const inquiry = {
+      name: req.body.name,
+      email: req.body.email,
+      message: req.body.message,
+    };
+
+    const result = await collection.insertOne(inquiry);
+    res.status(201).send(`Inquiry added with ID: ${result.insertedId}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error adding inquiry");
+  } finally {
+    await client.close();
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
