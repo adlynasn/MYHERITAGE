@@ -72,7 +72,6 @@ app.post("/loginUser", async (req, res) => {
   }
 });
 
-
 app.post("/submitInquiry", async (req, res) => {
   const client = new MongoClient(uri);
 

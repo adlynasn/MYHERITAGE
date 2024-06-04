@@ -10,6 +10,7 @@ const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
+const { Product } = require('./models/productModel')
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -115,6 +116,27 @@ app.post("/submitInquiry", async (req, res) => {
   }
 });
 
+app.get('/api/products', async (req, res) => {
+  await dbConnect();
+
+  try {
+    let filter = {};
+    if (req.query.categories) {
+      filter.category = { $in: req.query.categories.split(',') };
+    }
+    if (req.query.maxPrice) {
+      filter.price = { $lte: parseFloat(req.query.maxPrice) }; // Filter by maximum price
+    }
+
+    const products = await Product.find(filter).populate('category');
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).send(error);
+  }
+});
+
+
 app.get("/cart", async (req, res) => {
     const uri =
       "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
@@ -147,5 +169,12 @@ app.use(errorHandler);
 
 // Start the server
 app.listen(PORT, () => {
+
+
+    console.log(`Server is running at PORT ${PORT}`);
+})
+
+=======
   console.log(`Server is running at PORT ${PORT}`);
 });
+

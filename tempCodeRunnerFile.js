@@ -1,1 +1,1 @@
-ongodb://localhost:27017/digitic
+mongodb://localhost:27017/digitic
