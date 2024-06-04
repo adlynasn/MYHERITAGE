@@ -241,7 +241,30 @@
         </div>
     </footer>
     <!-- End Footer Section -->
-
+    <script>
+        async function fetchArtisans() {
+            try {
+                const response = await fetch('/artisans');
+                const artisans = await response.json();
+    
+                // Display fetched artisans using DOM manipulation (e.g., loops)
+                const portfolioItems = document.querySelector('.portfolio-items');
+                portfolioItems.innerHTML = ''; // Clear existing content
+    
+                artisans.forEach(artisan => {
+                    const article = document.createElement('article');
+                    article.classList.add('portfolio-item');
+                    // ... create elements and populate artisan data
+                    portfolioItems.appendChild(article);
+                });
+            } catch (err) {
+                console.error(err);
+                // Handle errors appropriately (e.g., display error message)
+            }
+        }
+    
+        fetchArtisans(); // Call the function to fetch data on page load
+    </script>
 </body>
 
 </html>
