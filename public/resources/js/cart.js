@@ -35,9 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
             cartSubtotalElement.textContent = `RM${cartTotal.toFixed(2)}`;
         }
 
-       // Update the "Total" to include the additional fee
+        // Update the "Total" to include the additional fee
         if (cartTotalElement) {
-            cartTotalElement.textContent = `Total: RM${(cartTotal + additionalFee).toFixed(2)}`; // Add the extra RM 8.00
+            const total = cartTotal + additionalFee;
+            cartTotalElement.textContent = `Total: RM${total.toFixed(2)}`; // Add the extra RM 8.00
         }
     }
 
@@ -84,14 +85,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check initial cart status to ensure "No items in cart" message if needed
     function checkCartStatus() {
-        if (tableBody.children.length === 0) {
+        const tbody = document.querySelector('table tbody');
+        if (tbody.children.length === 0) {
             const noItemsRow = document.createElement("tr");
             const noItemsCell = document.createElement("td");
             noItemsCell.colSpan = 6; // Adjust if needed
             noItemsCell.textAlign = "center";
             noItemsCell.textContent = "No items in cart";
             noItemsRow.appendChild(noItemsCell);
-            tableBody.appendChild(noItemsRow);
+            tbody.appendChild(noItemsRow);
         }
     }
 
@@ -102,3 +104,75 @@ document.addEventListener("DOMContentLoaded", function () {
     recalculateCartTotal(); // Recalculate the cart total
     checkCartStatus(); // Check initial cart status
 });
+
+document.addEventListener("DOMContentLoaded", async function() {
+  const userId = '665de9438d48ef4b168eee50'; // Replace with actual user ID
+
+  try {
+    const response = await fetch(`/api/cart/${userId}`);
+    const cartData = await response.json();
+
+    if (response.ok) {
+      displayCartItems(cartData.items);
+      updateCartTotal(cartData.items);
+    } else {
+      console.error('Error fetching cart:', cartData.message);
+    }
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+  }
+});
+
+function displayCartItems(items) {
+  const tbody = document.querySelector('table tbody');
+  tbody.innerHTML = ''; // Clear existing rows
+
+  items.forEach(item => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <th scope="row">
+        <div class="d-flex align-items-center">
+          <img src="${item.image}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px" alt="${item.productName}" />
+        </div>
+      </th>
+      <td>${item.productName}</td>
+      <td>RM${item.price}</td>
+      <td>
+        <div class="input-group" style="width: fit-content">
+          <div class="input-group-prepend">
+            <button class="btn small-button border" id="decrease-btn">
+              <i class="fa fa-minus small-icon"></i>
+            </button>
+          </div>
+          <input type="text" class="form-control-sm text-center" value="${item.quantity}" id="product-quantity" />
+          <div class="input-group-append">
+            <button class="btn small-button border" id="increase-btn">
+              <i class="fa fa-plus small-icon"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+      <td>RM${item.price * item.quantity}</td>
+      <td>
+        <button class="btn bg-light medium-button" id="remove-btn">
+          <i class="fa fa-times text-danger"></i>
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function updateCartTotal(items) {
+  let subtotal = 0;
+
+  items.forEach(item => {
+    subtotal += item.price * item.quantity;
+  });
+
+  const shipping = 8.00; // Flat rate shipping
+  const total = subtotal + shipping;
+
+  document.getElementById('cart-subtotal').textContent = `RM${subtotal.toFixed(2)}`;
+  document.getElementById('cart-total').textContent = `RM${total.toFixed(2)}`;
+}
