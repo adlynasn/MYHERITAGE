@@ -15,9 +15,10 @@ const productSchema=mongoose.Schema({
     default:''
   },
   image:{
-    type:String,
-    default:''
+    data:Buffer,
+    contentType:String
   },
+  imagePath: { type: String }, // Add imagePath field
   images:[{
     type:String
   }],
