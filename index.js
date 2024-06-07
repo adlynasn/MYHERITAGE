@@ -14,6 +14,7 @@ const { Product } = require('./models/productModel')
 const multer=require('multer')
 
 
+const { Product } = require('./models/productModel')
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
