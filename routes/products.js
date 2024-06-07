@@ -3,6 +3,17 @@ const { Category } = require('../models/category');
 const router = express.Router();
 const { Product } = require('../models/productModel');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const ProductController=require('../controller/productCtrl')
+const upload=require('../middlewares/upload')
+const {addProduct}=require('../controller/productCtrl')
+
+
+
+
+
+// Add product route
+router.post('/addProduct', upload.single('image'), addProduct);
 
 // Get list of products with name and image only
 router.get('/', async (req, res) => {
@@ -28,39 +39,39 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a product
-router.post('/', async (req, res) => {
-    const category = await Category.findById(req.body.category);
-    if (!category) return res.status(400).send('Invalid Category');
+// router.post('/', async (req, res) => {
+//     const category = await Category.findById(req.body.category);
+//     if (!category) return res.status(400).send('Invalid Category');
 
-    let product = new Product({
-        name: req.body.name,
-        image: req.body.image,
-        countInStock: req.body.countInStock,
-        description: req.body.description,
-        richdescription: req.body.richdescription,
-        images: req.body.images,
-        price: req.body.price,
-        category: req.body.category,
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-        isFeatured: req.body.isFeatured,
-        dateCreated: req.body.dateCreated,
-    });
+//     let product = new Product({
+//         name: req.body.name,
+//         image: req.body.image,
+//         countInStock: req.body.countInStock,
+//         description: req.body.description,
+//         richdescription: req.body.richdescription,
+//         images: req.body.images,
+//         price: req.body.price,
+//         category: req.body.category,
+//         rating: req.body.rating,
+//         numReviews: req.body.numReviews,
+//         isFeatured: req.body.isFeatured,
+//         dateCreated: req.body.dateCreated,
+//     });
 
-    try {
-        product = await product.save();
+//     try {
+//         product = await product.save();
 
-        if (!product) {
-            return res.status(404).send('The product cannot be created');
-        }
-        res.send(product);
-    } catch (err) {
-        res.status(500).json({
-            error: err.message,
-            success: false
-        });
-    }
-});
+//         if (!product) {
+//             return res.status(404).send('The product cannot be created');
+//         }
+//         res.send(product);
+//     } catch (err) {
+//         res.status(500).json({
+//             error: err.message,
+//             success: false
+//         });
+//     }
+// });
 
 // Update a product
 router.put('/:id', async (req, res) => {

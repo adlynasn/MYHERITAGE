@@ -8,8 +8,10 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
+const categoryRouter=require('./routes/categories')
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const { Product } = require('./models/productModel')
+const multer=require('multer')
 
 
 const { Product } = require('./models/productModel')
@@ -27,10 +29,12 @@ app.use(morgan("tiny"));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Use the routers for specified paths
 app.use(`${api}/user`, usersRouter);
 app.use(`${api}/products`, productsRouter);
+app.use(`${api}/categories`, categoryRouter);
 
 // MongoDB Operations
 app.post("/addUser", async (req, res) => {
@@ -63,7 +67,44 @@ app.post("/addUser", async (req, res) => {
     await client.close();
   }
 });
+//storage multer
 
+const Storage=multer.diskStorage({
+  destination:'uploads',
+  filename:(req,file,cb)=>{
+    cb(null,file.originalname);
+  }
+})
+const upload=multer({
+  storage:Storage
+}).single('image')
+
+
+app.post('/upload',(req,res)=>{
+upload(req,res,(err)=>{
+  if(err){
+    console.log(err)
+  }
+  else{
+    const newProduct=new Product({
+        name:req.body.name,
+        description:req.body.description,
+        richdescription:req.body.richdescription,
+        price:req.body.price,
+        isFeatured:req.body.isFeatured,
+        countInStock:req.body.countInStock,
+        rating:req.body.rating,
+        numReviews:req.body.numReviews,
+        category:req.body.category,
+        image:{
+          data:req.file.filename,
+          contentType:'image/jpg'
+        }
+    })
+    newProduct.save().then(()=>res.send('successfully uploaded')).catch((err)=>console.log(err));
+  }
+})
+})
 app.post("/loginUser", async (req, res) => {
   // MongoDB connection URI
   const uri =
@@ -137,6 +178,26 @@ app.get('/api/products', async (req, res) => {
     res.status(500).send(error);
   }
 });
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).populate('category');
+    if (!product) {
+      return res.status(404).send({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+app.get('/api/featured-products', async (req, res) => {
+  try {
+    // Assuming you have a Product model and 'isFeatured' is a boolean attribute
+    const featuredProducts = await Product.find({ isFeatured: true }).limit(3);
+    res.json(featuredProducts);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 // Error handling middlewares
 app.use(notFound);
@@ -147,4 +208,3 @@ app.listen(PORT, () => {
 
   console.log(`Server is running at PORT ${PORT}`);
 });
-
