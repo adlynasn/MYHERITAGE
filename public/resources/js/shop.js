@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function displayProducts(products) {
+ function displayProducts(products) {
     const productsContainer = document.getElementById("products");
     console.log("Displaying products:", products); // Debugging log
 
@@ -198,8 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
     featuredProductsContainer.innerHTML = featuredProductHtml;
   }
-
-  // Function to sort products
+  
+  / Function to sort products
   function sortProducts(sortBy) {
     if (!Array.isArray(products)) {
       console.error("Products is not an array:", products);
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Sorted products:", sortedProducts); // Debugging log
     displayProducts(sortedProducts);
   }
-
+  
   // Function to filter products by category
   function filterProducts(category) {
     let filteredProducts = [];

@@ -178,6 +178,7 @@ app.get("/api/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate("category");
