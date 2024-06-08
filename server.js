@@ -13,6 +13,7 @@ const port = 3000;
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
 
