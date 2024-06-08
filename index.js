@@ -9,11 +9,11 @@ const bcrypt = require("bcrypt");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
 const categoryRouter = require("./routes/categories");
+const cartRouter = require("./routes/cartRoute");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const { Product } = require("./models/productModel");
 const multer = require("multer");
 
-const { Product } = require('./models/productModel')
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -160,8 +160,6 @@ app.post("/submitInquiry", async (req, res) => {
 });
 
 app.get("/api/products", async (req, res) => {
-=======
-app.get('/api/products', async (req, res) => {
   await dbConnect();
 
   try {
@@ -201,40 +199,31 @@ app.get("/api/featured-products", async (req, res) => {
   }
 });
 
-    const products = await Product.find(filter).populate('category');
-    res.json(products);
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    res.status(500).send(error);
+app.get("/cart", async (req, res) => {
+  const uri =
+    "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("cart");
+
+    // Assuming you have only one cart data stored in the collection
+    const cart = await collection.findOne();
+
+    if (cart) {
+      res.json({ success: true, cart });
+    } else {
+      res.json({ success: false, message: "Cart not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching cart");
+  } finally {
+    await client.close();
   }
 });
-
-
-app.get("/cart", async (req, res) => {
-    const uri =
-      "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
-    const client = new MongoClient(uri);
-  
-    try {
-      await client.connect();
-      const database = client.db("myheritageDB");
-      const collection = database.collection("cart");
-  
-      // Assuming you have only one cart data stored in the collection
-      const cart = await collection.findOne();
-  
-      if (cart) {
-        res.json({ success: true, cart });
-      } else {
-        res.json({ success: false, message: "Cart not found" });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error fetching cart");
-    } finally {
-      await client.close();
-    }
-  });
 
 // Error handling middlewares
 app.use(notFound);
@@ -242,8 +231,5 @@ app.use(errorHandler);
 
 // Start the server
 app.listen(PORT, () => {
-
-    console.log(`Server is running at PORT ${PORT}`);
-})
-
-
+  console.log(`Server is running at PORT ${PORT}`);
+});

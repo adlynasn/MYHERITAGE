@@ -81,24 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Error fetching featured products:", error);
     }
-
-
-  // Function to fetch all products
-  function fetchProducts() {
-      fetch('/api/products')
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error('Network response was not ok ' + response.statusText);
-              }
-              return response.json();
-          })
-          .then(data => {
-              products = data;
-              console.log('Fetched products:', products); // Debugging log
-              displayProducts(products);
-          })
-          .catch(error => console.error('Error fetching products:', error));
-
   }
 
   // Function to fetch products based on the price range
@@ -119,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function displayProducts(products) {
     const productsContainer = document.getElementById("products");
     console.log("Displaying products:", products); // Debugging log
+
     const productHtml = products
       .map((product) => {
         // Use the imagePath directly from the product data
@@ -169,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function displayFeaturedProducts(productsArray) {
     const featuredProductsContainer =
-    document.getElementById("featured-products");
+      document.getElementById("featured-products");
     console.log("Displaying featured products:", productsArray); // Debugging log
 
     const featuredProductHtml = productsArray
@@ -233,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Sorted products:", sortedProducts); // Debugging log
     displayProducts(sortedProducts);
-    }
+  }
 
   // Function to filter products by category
   function filterProducts(category) {
@@ -250,17 +233,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Filtered products by category:", category, filteredProducts);
     displayProducts(filteredProducts);
-      try {
-          const response = await fetch(`/api/products?maxPrice=${maxPrice}`);
-          if (!response.ok) {
-              throw new Error('Network response was not ok ' + response.statusText);
-          }
-          const data = await response.json();
-          console.log('Fetched products:', data); // Debugging log
-          displayProducts(data);
-      } catch (error) {
-          console.error('Error fetching products:', error);
-      }
   }
-
 });
