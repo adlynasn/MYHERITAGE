@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     featuredProductsContainer.innerHTML = featuredProductHtml;
   }
   
-  / Function to sort products
+  // Function to sort products
   function sortProducts(sortBy) {
     if (!Array.isArray(products)) {
       console.error("Products is not an array:", products);
