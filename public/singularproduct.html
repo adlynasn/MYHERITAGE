@@ -124,51 +124,66 @@
 
 
     <!-- ***** Product Area Starts ***** -->
-    <section class ="section-class" id="product">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="section-class" id="product">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                <div class="left-images">
-                    <img src="media/heroPattern.png" alt="">
-                    <img src="assets/images/single-product-02.jpg" alt="">
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="right-content">
-                    <h4> AKSARA Batik</h4>
-                    <span class="price">RM50.00</span>
-                    <ul class="stars">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod kon tempor incididunt ut labore.</span>
-                    <div class="quote">
-                        <i class="fa fa-quote-left"></i><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiuski smod.</p>
+                    <div class="left-images">
+                        <img id="mainImage" src="media/heroPattern.png" alt="">
+                        <img id="additionalImage" src="assets/images/single-product-02.jpg" alt="">
                     </div>
-                    <div class="quantity-content">
-                        <div class="left-content">
-                            <h6>No. of Orders</h6>
+                </div>
+                <div class="col-lg-4">
+                    <div class="right-content">
+                        <h4 id="productName">AKSARA Batik</h4>
+                        <span id="productPrice" class="price">RM50.00</span>
+                        <ul id="productStars" class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span id="productDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod kon tempor incididunt ut labore.</span>
+                        <div class="quote">
+                            <i class="fa fa-quote-left"></i><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiuski smod.</p>
                         </div>
-                        <div class="right-content">
-                            <div class="quantity buttons_added">
-                              <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" id="quantityInput" class="input-text qty text" size="4" pattern="" inputmode="">
-                                <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button" value="+" class="plus">
+                        <div class="quantity-content">
+                            <div class="left-content">
+                                <h6>No. of Orders</h6>
+                            </div>
+                            <div class="right-content">
+                                <div class="quantity buttons_added">
+                                    <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" id="quantityInput" class="input-text qty text" size="4" pattern="" inputmode="">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="">
+                                    <input type="button" value="+" class="plus">
+                                </div>
                             </div>
                         </div>
+                        <div class="total">
+                            <h4>Total: <span id="totalPrice">RM50.00</span></h4>
+                            <div class="main-border-button"><button id="addToCartBtn">Add To Cart</button></div>
+                        </div>  
                     </div>
-                    <div class="total">
-                      <h4>Total: RM50.00</h4>
-                      <div class="main-border-button"><button id="addToCartBtn">Add To Cart</button></div>
-                    </div>  
-
                 </div>
-            </div>
             </div>
         </div>
     </section>
+
+    <script src="resources/js/singularproduct.js"></script>
+</body>
+</html>
+
     <!-- ***** Product Area Ends ***** -->
     
     <!-- Start Footer Section -->
