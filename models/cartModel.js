@@ -1,64 +1,43 @@
-const { MongoClient, ObjectId } = require('mongodb');
-const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
-dotenv.config();
+const cartSchema = new mongoose.Schema({
+  userId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    required: true },
 
-// MongoDB connection URI
-const uri = process.env.MONGO_URI || 'mongodb+srv://adlina:adlina1234@myheritagedb.oagnchb.mongodb.net/';
+  items: [{
+    productId: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      required: true 
+    },
 
-class Cart {
-  constructor() {
-    this.client = new MongoClient(uri);
-    this.database = null;
-    this.collection = null;
-  }
+    quantity: { 
+      type: Number, 
+      default: 1 
+    },
+    
+    price: { 
+      type: Number, 
+      required: true 
+    },
+  }],
 
-  async connect() {
-    if (!this.client.isConnected()) {
-      await this.client.connect();
-      this.database = this.client.db('your_database_name');
-      this.collection = this.database.collection('cart');
-    }
-  }
+  createdAt: { 
+    type: Date, 
+    default: Date.now 
+  },
 
-  async addItem(userId, productId, quantity, price) {
-    await this.connect();
+  updatedAt: { 
+    type: Date, 
+    default: Date.now 
+  },
 
-    const cartItem = {
-      userId: new ObjectId(userId),
-      items: [{
-        productId: new ObjectId(productId),
-        quantity: quantity || 1,
-        price: price
-      }],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      status: 'active',
-    };
+  status: { 
+    type: String, 
+    default: 'active' 
+  },
+});
 
-    const result = await this.collection.insertOne(cartItem);
-    return result.insertedId;
-  }
+const Cart = mongoose.model('Cart', cartSchema);
 
-  async getCart(userId) {
-    await this.connect();
-    return await this.collection.findOne({ userId: new ObjectId(userId) });
-  }
-
-  async updateCart(userId, items) {
-    await this.connect();
-    const updatedCart = await this.collection.updateOne(
-      { userId: new ObjectId(userId) },
-      { $set: { items: items, updatedAt: new Date() } }
-    );
-    return updatedCart.modifiedCount;
-  }
-
-  async deleteCart(userId) {
-    await this.connect();
-    const result = await this.collection.deleteOne({ userId: new ObjectId(userId) });
-    return result.deletedCount;
-  }
-}
-
-module.exports = new Cart();
+module.exports = { Cart };
