@@ -130,6 +130,18 @@ const upload = multer({
   storage: Storage,
 }).single("image");
 
+
+const Storage = multer.diskStorage({
+  destination: "uploads",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({
+  storage: Storage,
+}).single("image");
+
+
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
     if (err) {
@@ -261,6 +273,9 @@ app.get("/cart", async (req, res) => {
   try {
     await client.connect();
     const database = client.db("myheritageDB");
+
+    const collection = database.collection("cart");
+
     const collection = database.collection("carts");
 
 
