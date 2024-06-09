@@ -1,6 +1,6 @@
 const express = require("express");
 const dbConnect = require("./config/dbConnect");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require("dotenv").config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -125,17 +125,6 @@ app.post("/addUser", async (req, res) => {
     await client.close();
   }
 });
-//storage multer
-
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({
-  storage: Storage,
-}).single("image");
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -289,6 +278,7 @@ app.get("/cart", async (req, res) => {
   try {
     await client.connect();
     const database = client.db("myheritageDB");
+
     const collection = database.collection("carts");
 
     // Assuming you have only one cart data stored in the collection
@@ -635,6 +625,37 @@ app.delete("/deleteProduct/:id", async (req, res) => {
   }
 });
 
+
+// Corrected /change-password Route with Predefined ID
+app.post('/change-password', async (req, res) => {
+  const client = new MongoClient(uri);
+  const predefinedUserId = '665de9438d48ef4b168eee50'; // predefined user ID
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const usersCollection = database.collection("users");
+
+    const user = await usersCollection.findOne({ _id: new ObjectId(predefinedUserId) });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    if (user.password !== currentPassword) {
+      return res.status(400).send('Current password is incorrect');
+    }
+
+    await usersCollection.updateOne(
+      { _id: new ObjectId(predefinedUserId) },
+      { $set: { password: newPassword } }
+    );
+
+    res.send('Password has been successfully changed');
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).send('Server error');
+
 // PUT route to update a product
 app.put("/updateProduct/:id", async (req, res) => {
   const client = new MongoClient(uri);
@@ -811,6 +832,7 @@ app.get("/getInquiries", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Error retrieving inquiries");
+
   } finally {
     await client.close();
   }
