@@ -1,18 +1,18 @@
 [
     {
-      "orderId": "ODR123456",
+      "orderNumber": "ODR123456",
       "items": ["Polo T-shirt", "White Socks", "Pin"],
       "status": "Complete",
       "date": "30-03-2024"
     },
     {
-      "orderId": "ODR789012",
+      "orderNumber": "ODR789012",
       "items": ["Shampoo", "Deodorant"],
       "status": "Cancelled",
       "date": "15-03-2024"
     },
     {
-      "orderId": "ODR345678",
+      "orderNumber": "ODR345678",
       "items": ["Headphone"],
       "status": "Complete",
       "date": "01-02-2024"

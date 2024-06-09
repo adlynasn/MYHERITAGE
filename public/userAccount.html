@@ -53,6 +53,7 @@
 
       
     </style>
+  </head>
  
     <body>
         <script type="module" src="/resources/js/main.js"></script>
@@ -60,7 +61,7 @@
           async
           crossorigin="anonymous"
           data-clerk-publishable-key="pk_test_c2V0dGxlZC1taW5ub3ctNjAuY2xlcmsuYWNjb3VudHMuZGV2JA"
-          src="https://https://settled-minnow-60.clerk.accounts.dev/npm/@clerk/clerk-js@4/dist/clerk.browser.js"
+          src="https://settled-minnow-60.clerk.accounts.dev/npm/@clerk/clerk-js@4/dist/clerk.browser.js"
           type="text/javascript"
         ></script>
     
@@ -140,37 +141,28 @@
             <a class="track-orders-link" href="trackOrder.html">Track My Orders</a>
         </div>
         
-          <!-- Profile Picture Container -->
-          <div class="profile-picture-container">
-              <label for="profileImage">
-                  <img src="media/person_1.jpg" alt="Profile Picture" class="profile-picture">
-              </label>
-              <input type="file" id="profileImage" style="display: none;" accept="image/*">
-          </div>
           <!-- User Profile Form Container -->
           <div class="user-profile-form-container">
-              <form class="user-profile-form">
-                  <div class="mb-3">
-                      <label for="name" class="form-label">Name</label>
-                      <input type="text" class="form-control" id="name" value="John Doe" readonly>
+            <form class="user-profile-form">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" value="Adlina Irham" readonly>
                   </div>
-                  <div class="mb-3">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="email" value="john@example.com" readonly>
-                  </div>
-                  <div class="mb-3">
-                      <label for="phone" class="form-label">Phone</label>
-                      <input type="text" class="form-control" id="phone" value="123-456-7890" readonly>
-                  </div>
-                  <div class="mb-3">
-                      <label for="address" class="form-label">Address</label>
-                      <input type="text" class="form-control" id="address" value="123 Main Street, City, Country" readonly>
-                  </div>
-                  <button id="editButton" class="btn btn-editCustom" onclick="toggleEditMode()">Edit Profile</button>
-              </form>
-              
-          </div>
-      </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id= "email" value = "adlina@gmail.com" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id= "phone" value = "0123035626" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id= "address" value = "JOhor Bahru Johor" readonly>
+                </div>
+                <button id="editButton" class="btn btn-editCustom" onclick="toggleEditMode()">Edit Profile</button>
+            </form>
+        </div>
       
       <!--change password form-->
       <div class="container">
@@ -364,38 +356,27 @@
           });
       </script>
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const form = document.querySelector('.change-password-form');
-                const successMessage = document.getElementById('successMessage');
-    
-                form.addEventListener('submit', function(event) {
-                    // Prevent the default form submission
-                    event.preventDefault();
-    
-                    // Check if any input field is empty
-                    const inputs = form.querySelectorAll('input');
-                    let isEmpty = false;
-                    inputs.forEach(input => {
-                        if (input.value.trim() === '') {
-                            isEmpty = true;
-                        }
-                    });
-    
-                    // If any input field is empty, show an alert and return
-                    if (isEmpty) {
-                        alert('Please fill in all fields.');
-                        return;
-                    }
-    
-                    // Simulate password change success 
-                    const isSuccess = true;
-    
-                    if (isSuccess) {
-                        // Show the success message
-                        successMessage.style.display = 'block';
-                    }
-                });
-            });
+                document.addEventListener("DOMContentLoaded", function() {
+              // Make an AJAX request to fetch the user's profile data
+              fetch("/user/profile")
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error("Failed to fetch user profile");
+                      }
+                      return response.json();
+                  })
+                  .then(data => {
+                      console.log("Profile data:", data); // Log the received data
+                      // Update the input fields with the user's profile information
+                      document.getElementById("name").value = `${data.firstname} ${data.lastname}`;
+                      document.getElementById("email").value = data.email;
+                      document.getElementById("phone").value = data.mobile;
+                      document.getElementById("address").value = data.address;
+                  })
+                  .catch(error => console.error("Error fetching user profile:", error));
+          });
+
+
         </script>
       
 </body>
