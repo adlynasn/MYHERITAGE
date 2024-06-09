@@ -98,7 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+ function displayProducts(products) {
+
   function displayProducts(products) {
+
     const productsContainer = document.getElementById("products");
     console.log("Displaying products:", products); // Debugging log
 
@@ -136,7 +139,11 @@ document.addEventListener("DOMContentLoaded", () => {
                               <p class="text-dark fs-5 fw-bold mb-0">RM${
                                 product.price
                               }</p>
+
+                              <a href="#" class="btn border border-secondary rounded-pill px-3 text-white">
+
                               <a href="#" class="add-to-cart-btn border border-secondary rounded-pill px-3 text-white" data-product-id="${product._id}">
+
                                   <i class="fa fa-shopping-bag me-2 text-white"></i> Add to cart
                               </a>
                           </div>
@@ -148,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
 
     productsContainer.innerHTML = productHtml;
-    
+
     // Attach event listeners to "Add to cart" links
     const addToCartLinks = document.querySelectorAll(".add-to-cart-btn");
     addToCartLinks.forEach((link) => {
@@ -189,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error("Error adding item to cart:", error);
           alert("Error adding item to cart. Please try again later."); // Display an error message to the user
       }
+
   }
 
   function displayFeaturedProducts(productsArray) {

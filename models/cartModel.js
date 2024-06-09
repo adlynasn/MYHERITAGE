@@ -3,20 +3,24 @@ const mongoose = require('mongoose');
 const cartSchema = new mongoose.Schema({
   userId: { 
     type: mongoose.Schema.Types.ObjectId, 
+
+    required: true },
+
     required: true 
   },
+
 
   items: [{
     productId: { 
       type: mongoose.Schema.Types.ObjectId, 
       required: true 
     },
-    
+
     productName: { 
       type: String, 
       required: true 
     },
-    
+
     quantity: { 
       type: Number, 
       default: 1 
@@ -36,6 +40,7 @@ const cartSchema = new mongoose.Schema({
       type: Number, 
       required: true 
     } // New total field
+
   }],
 
   createdAt: { 
@@ -57,7 +62,7 @@ const cartSchema = new mongoose.Schema({
 const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = { Cart };
-=======
+
 const { MongoClient, ObjectId } = require('mongodb');
 const dotenv = require('dotenv');
 
