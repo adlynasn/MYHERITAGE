@@ -180,76 +180,9 @@
                                         <th scope="col">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="d-flex align-items-center mt-4">
-                                                <img
-                                                  src="media/heroPattern.png"
-                                                  class="img-fluid me-5 rounded-circle"
-                                                  style="width: 80px; height: 80px"
-                                                  alt=""
-                                                />
-                                              </div>
-                                        </th>
-                                        <td class="py-5">AKSARA Batik</td>
-                                        <td class="py-5">RM50.00</td>
-                                        <td class="py-5">3</td>
-                                        <td class="py-5">RM150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-5"></td>
-                                        <td class="py-5"></td>
-                                        <td class="py-5">
-                                            <p class="mb-0 text-dark py-3">Subtotal</p>
-                                        </td>
-                                        <td class="py-5">
-                                            <div class="py-3 border-bottom border-top">
-                                                <p class="mb-0 text-dark">RM150.00</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-5">
-                                            <p class="mb-0 text-dark py-4">Shipping</p>
-                                        </td>
-                                        <td colspan="3" class="py-5">
-                                            <div class="form-check text-start">
-                                              <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-1" name="shipping-options" value="Free Shipping">
-                                              <label class="form-check-label" for="Shipping-1">Free Shipping</label>
-                                            </div>
-                                          
-                                            <div class="form-check text-start">
-                                              <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-2" name="shipping-options" value="Flat rate: RM8.00">
-                                              <label class="form-check-label" for="Shipping-2">Flat rate: RM8.00</label>
-                                            </div>
-                                          
-                                            <div class="form-check text-start">
-                                              <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-3" name="shipping-options" value="Local Pickup: RM2.00">
-                                              <label class="form-check-label" for="Shipping-3">Local Pickup: RM2.00</label>
-                                            </div>
-                                          </td>
-                                          
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-5">
-                                            <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
-                                        </td>
-                                        <td class="py-5"></td>
-                                        <td class="py-5"></td>
-                                        <td class="py-5">
-                                            <div class="py-3 border-bottom border-top">
-                                                <p class="mb-0 text-dark" >RM158.00</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="cart-items-body">
+                                  <!-- Placeholder for dynamically fetched cart items -->
+                              </tbody>
                             </table>
                         </div>
                         <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
@@ -421,7 +354,7 @@
       </footer>
       <!-- End Footer Section -->
   
-      <script src="resources/js/cart.js"></script>
+      <script src="resources/js/checkout.js"></script>
     </body>
   </html>
   
