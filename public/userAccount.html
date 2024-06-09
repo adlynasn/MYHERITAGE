@@ -165,10 +165,10 @@
         </div>
       
       <!--change password form-->
-      <div class="container">
+      <div class="container change-password-form">
         <h2>Change Password</h2>
 
-        <form class="change-password-form">
+        <form id="changePasswordForm">
             <!-- Your form fields for changing password -->
             <div class="mb-3">
                 <label for="currentPassword" class="form-label">Current Password</label>
@@ -178,13 +178,11 @@
                 <label for="newPassword" class="form-label">New Password</label>
                 <input type="password" class="form-control" id="newPassword">
             </div>
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                <input type="password" class="form-control" id="confirmPassword">
-            </div>
             <button type="submit" class="btn btn-secondary">Change Password</button>
+            <p id="successMessage"></p>
+            <p id="errorMessage"></p>
         </form>
-        <p class="success-message" id="successMessage" style="display: none;">Password has been successfully changed.</p>
+
     </div>
     
     <footer class="footer-section">
@@ -340,44 +338,30 @@
               document.getElementById('email').readOnly = true;
               document.getElementById('phone').readOnly = true;
               document.getElementById('address').readOnly = true;
-      
-              // Hide the file input for changing profile picture
-              document.getElementById('profileImage').style.display = 'none';
+  
           }
-      
-          document.getElementById('profileImage').addEventListener('change', function(event) {
-              var file = event.target.files[0];
-              var reader = new FileReader();
-              reader.onload = function(event) {
-                  var img = document.querySelector('.profile-picture');
-                  img.src = event.target.result;
-              };
-              reader.readAsDataURL(file);
-          });
+                document.getElementById('changePasswordForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+
+                const response = await fetch('/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
+
+                if (response.ok) {
+                  document.getElementById('successMessage').innerText = 'Password has been successfully changed';
+                } else {
+                    const error = await response.text();
+                    document.getElementById('errorMessage').innerText = error;
+
+                }
+            }); 
       </script>
-          <script>
-                document.addEventListener("DOMContentLoaded", function() {
-              // Make an AJAX request to fetch the user's profile data
-              fetch("/user/profile")
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error("Failed to fetch user profile");
-                      }
-                      return response.json();
-                  })
-                  .then(data => {
-                      console.log("Profile data:", data); // Log the received data
-                      // Update the input fields with the user's profile information
-                      document.getElementById("name").value = `${data.firstname} ${data.lastname}`;
-                      document.getElementById("email").value = data.email;
-                      document.getElementById("phone").value = data.mobile;
-                      document.getElementById("address").value = data.address;
-                  })
-                  .catch(error => console.error("Error fetching user profile:", error));
-          });
-
-
-        </script>
-      
 </body>
 </html>

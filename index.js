@@ -1,6 +1,6 @@
 const express = require("express");
 const dbConnect = require("./config/dbConnect");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require("dotenv").config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -494,7 +494,39 @@ app.post("/cart/update", async (req, res) => {
   }
 });
 
+// Corrected /change-password Route with Predefined ID
+app.post('/change-password', async (req, res) => {
+  const client = new MongoClient(uri);
+  const predefinedUserId = '665de9438d48ef4b168eee50'; // predefined user ID
+  const { currentPassword, newPassword } = req.body;
 
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const usersCollection = database.collection("users");
+
+    const user = await usersCollection.findOne({ _id: new ObjectId(predefinedUserId) });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    if (user.password !== currentPassword) {
+      return res.status(400).send('Current password is incorrect');
+    }
+
+    await usersCollection.updateOne(
+      { _id: new ObjectId(predefinedUserId) },
+      { $set: { password: newPassword } }
+    );
+
+    res.send('Password has been successfully changed');
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).send('Server error');
+  } finally {
+    await client.close();
+  }
+});
 
 // Error handling middlewares
 app.use(notFound);
