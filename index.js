@@ -12,6 +12,7 @@ const cartRouter = require("./routes/cartRoute");
 const categoryRouter = require("./routes/categories");
 const session = require("express-session"); // Import express-session
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
+const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
