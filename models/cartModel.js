@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const cartSchema = new mongoose.Schema({
   userId: { 
     type: mongoose.Schema.Types.ObjectId, 
-    required: true 
+    required: true
   },
+
 
   items: [{
     productId: { 
@@ -56,4 +57,5 @@ const cartSchema = new mongoose.Schema({
 
 const Cart = mongoose.model('Cart', cartSchema);
 
-module.exports = { Cart };
+module.exports = new Cart();
+
