@@ -48,11 +48,11 @@
     margin-right: auto;
     margin-left: auto;
     position: relative;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(/MYHERITAGE/media/homeBanner.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-top: 3rem !important;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(/media/homeBanner.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 3rem !important;
     padding-bottom: 3rem !important;
 
 }
