@@ -99,6 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
  function displayProducts(products) {
+
+  function displayProducts(products) {
+
     const productsContainer = document.getElementById("products");
     console.log("Displaying products:", products); // Debugging log
 
@@ -136,7 +139,11 @@ document.addEventListener("DOMContentLoaded", () => {
                               <p class="text-dark fs-5 fw-bold mb-0">RM${
                                 product.price
                               }</p>
+
                               <a href="#" class="btn border border-secondary rounded-pill px-3 text-white">
+
+                              <a href="#" class="add-to-cart-btn border border-secondary rounded-pill px-3 text-white" data-product-id="${product._id}">
+
                                   <i class="fa fa-shopping-bag me-2 text-white"></i> Add to cart
                               </a>
                           </div>
@@ -148,6 +155,48 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
 
     productsContainer.innerHTML = productHtml;
+
+    // Attach event listeners to "Add to cart" links
+    const addToCartLinks = document.querySelectorAll(".add-to-cart-btn");
+    addToCartLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          const productId = link.getAttribute("data-product-id");
+          const userId = "665de9438d48ef4b168eee50"; // Hardcoded userID
+
+          // Call the function to add the product to the cart
+          addToCart(userId, productId);
+        });
+    });
+}
+
+
+    // Function to add a product to the cart
+    async function addToCart(userId, productId) {
+      try {
+        const response = await fetch("/cart/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userId: userId,
+            productId: productId,
+            quantity: 1 // You can adjust the quantity as needed
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+
+          const responseData = await response.json();
+          console.log("Response from server:", responseData); // Debugging log
+          alert(responseData.message); // Display a message to the user
+      } catch (error) {
+          console.error("Error adding item to cart:", error);
+          alert("Error adding item to cart. Please try again later."); // Display an error message to the user
+      }
+
   }
 
   function displayFeaturedProducts(productsArray) {
