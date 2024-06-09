@@ -2,10 +2,11 @@ document.addEventListener("DOMContentLoaded", async function() {
     const tableBody = document.querySelector("table tbody");
     const cartTotalElement = document.getElementById("cart-total");
     const cartSubtotalElement = document.getElementById("cart-subtotal");
+    const userId = '665de9438d48ef4b168eee50'; // Hardcoded userID
 
     async function fetchCartData() {
         try {
-            const response = await fetch("/cart");
+            const response = await fetch(`/cart`);
             const responseData = await response.json();
 
             if (response.ok) {
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         items.forEach(item => {
             const row = document.createElement('tr');
+            row.dataset.productId = item.productId; // Set data attribute for product ID
             row.innerHTML = `
                 <th scope="row">
                     <div class="d-flex align-items-center">
@@ -54,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 </td>
                 <td>RM${item.price * item.quantity}</td>
                 <td>
-                    <button class="btn bg-light medium-button" id="remove-btn">
+                    <button class="btn bg-light medium-button remove-btn">
                         <i class="fa fa-times text-danger"></i>
                     </button>
                 </td>
@@ -125,12 +127,37 @@ document.addEventListener("DOMContentLoaded", async function() {
             });
         });
 
-        document.querySelectorAll("#remove-btn").forEach((button) => {
+        document.querySelectorAll(".remove-btn").forEach((button) => {
             button.addEventListener("click", function () {
                 const row = button.closest("tr");
+                const productId = row.dataset.productId;
+
+                // Remove the row from the table immediately
                 tableBody.removeChild(row);
                 recalculateCartTotal();
                 checkCartStatus();
+
+                // Send a request to the backend to remove the item from the database
+                fetch(`/cart/remove/${productId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to remove item from cart');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Remove the row from the table if the item was successfully removed from the database
+                    if (data.success) {
+                        tableBody.removeChild(row);
+                        recalculateCartTotal();
+                        checkCartStatus();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error removing item from cart:', error);
+                });
             });
         });
     }
@@ -140,7 +167,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             const noItemsRow = document.createElement("tr");
             const noItemsCell = document.createElement("td");
             noItemsCell.colSpan = 6;
-            noItemsCell.textAlign = "center";
+            noItemsCell.style.textAlign = "center";
             noItemsCell.textContent = "No items in cart";
             noItemsRow.appendChild(noItemsCell);
             tableBody.appendChild(noItemsRow);
@@ -192,6 +219,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         const userId = '665de9438d48ef4b168eee50'; // Hardcoded userID
         sendQuantityDataToBackend({ userId, quantities });
     });
+
 
     await fetchCartData(); // Fetch the cart data and display it
 });

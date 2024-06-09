@@ -6,20 +6,23 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const path = require("path");
 const bcrypt = require("bcrypt");
+
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
 const cartRouter = require("./routes/cartRoute");
 const categoryRouter = require("./routes/categories");
 const session = require("express-session"); // Import express-session
+const orderRoute = require('./routes/orderRoute');
+
+
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
+const { User } = require("./models/userModel");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
-
 const multer = require("multer");
-
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -95,6 +98,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(`${api}/user`, usersRouter);
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoryRouter);
+app.use('/api', orderRoute); 
 
 // MongoDB Operations
 app.post("/addUser", async (req, res) => {
@@ -127,6 +131,51 @@ app.post("/addUser", async (req, res) => {
     await client.close();
   }
 });
+
+app.get("/getUser/:userID", async (req, res) => {
+  // MongoDB connection URI
+  const uri =
+    "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
+
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("users");
+
+    const userID = req.params.userID;
+
+    console.log("Fetching user with ID:", userID); // Log the user ID being fetched
+
+    const user = await collection.findOne({ _id: userID });
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      console.log("User not found"); // Log that the user was not found
+      res.status(404).send("User not found");
+    }
+  } catch (err) {
+    console.error("Error fetching user:", err); // Log any errors that occur
+    res.status(500).send("Error fetching user");
+  } finally {
+    await client.close();
+  }
+});
+
+
+
+//storage multer
+const Storage = multer.diskStorage({
+  destination: "uploads",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({
+  storage: Storage,
+}).single("image");
+
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -358,6 +407,51 @@ app.post("/cart/update", async (req, res) => {
       res.status(500).json({ success: false, error: "Error updating cart" });
   }
 });
+
+
+// Removing an item from the cart
+app.delete('/cart/remove/:productId', async (req, res) => {
+    const productId = req.params.productId;
+    const userId = '665de9438d48ef4b168eee50'; // Hardcoded user ID
+
+    try {
+        const result = await Cart.updateOne(
+            { userId },
+            { $pull: { items: { productId } } }
+        );
+
+        if (result.nModified > 0) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false, message: 'Item not found in cart' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error removing item from cart', error });
+    }
+});
+
+// POST /order/create route
+app.post('/api/order/create', async (req, res) => {
+  try {
+      // Extract order data from request body
+      const { userID, items } = req.body;
+
+      // Set the status to 'Pending'
+      const status = 'Pending';
+
+      // Here you can perform any necessary validation or data processing before creating the order
+
+      // Call the createOrder function from the controller to create the order
+      const newOrder = await orderController.createOrder(userID, items, status);
+
+      // Return the newly created order in the response
+      res.status(201).json(newOrder);
+  } catch (error) {
+      // Handle errors
+      res.status(400).json({ message: error.message });
+  }
+});
+
 
 app.post("/submitArtisanReview", async (req, res) => {
   const client = new MongoClient(uri);

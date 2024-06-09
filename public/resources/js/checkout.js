@@ -2,12 +2,13 @@ document.addEventListener("DOMContentLoaded", async function() {
     const tableBody = document.querySelector("table tbody");
     const cartTotalElement = document.getElementById("cart-total");
     const cartSubtotalElement = document.getElementById("cart-subtotal");
-  
+    const userInfo = document.getElementById("user-information");
+
     async function fetchCartData() {
         try {
             const response = await fetch("/cart");
             const responseData = await response.json();
-  
+
             if (response.ok) {
                 if (responseData.success) {
                     const cartData = responseData.cart;
@@ -23,6 +24,36 @@ document.addEventListener("DOMContentLoaded", async function() {
             console.error("Error fetching cart:", error);
         }
     }
+
+    
+    async function getUserData() {
+        const userID = `665de9438d48ef4b168eee50`; // Replace this with an actual userID from your database
+    
+        try {
+            const response = await fetch(`/getUser/${userID}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch user data: ${response.statusText}`);
+            }
+    
+            const userData = await response.json();
+            // Construct user information HTML
+            const userInfoHTML = `
+                <p><strong>Name:</strong> ${userData.firstname} ${userData.lastname}</p>
+                <p><strong>Mobile:</strong> ${userData.mobile}</p>
+                <p><strong>Email:</strong> ${userData.email}</p>
+                <p><strong>Address:</strong> ${userData.address}</p>
+            `;
+    
+            // Update placeholder with user information
+            userInfo.innerHTML = userInfoHTML;
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+            // Handle the error appropriately, such as displaying an error message to the user
+        }
+    }
+    
+    // Call the function to fetch user data
+    getUserData();
   
     function displayCartItems(items) {
       tableBody.innerHTML = ''; // Clear existing rows
@@ -147,6 +178,69 @@ document.addEventListener("DOMContentLoaded", async function() {
             tableBody.appendChild(noItemsRow);
         }
     }
+
+    // JavaScript to handle unchecking behavior
+    const radioButtons = document.querySelectorAll('.form-check-input');
+
+    radioButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.checked) {
+                radioButtons.forEach(otherButton => {
+                    if (otherButton !== this) {
+                        otherButton.checked = false;
+                    }
+                });
+            } else {
+                this.checked = true;
+            }
+        });
+    });
+
+     // Function to place the order
+     async function placeOrder() {
+        try {
+            // Extract items from the cart table
+            const cartItems = Array.from(tableBody.children).map(row => {
+                const productName = row.querySelector("td:nth-child(2)").textContent;
+                const price = parseFloat(row.querySelector("td:nth-child(3)").textContent.replace("RM", ""));
+                const quantity = parseInt(row.querySelector("input#product-quantity").value, 10);
+                return { productName, price, quantity };
+            });
+
+            // Construct the order data
+            const orderData = {
+                userID: "665de9438d48ef4b168eee50", // Hardcoded for now, replace with actual user ID
+                items: cartItems,
+            };
+
+            // Send a POST request to create the order
+            const response = await fetch("/api/order/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            // Check if the request was successful
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log("Order placed successfully:", responseData);
+                // Optionally, you can redirect the user to a thank you page
+                window.location.href = "thankyoupage.html";
+            } else {
+                const errorData = await response.json();
+                throw new Error(`Failed to place order: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error("Error placing order:", error);
+            // Handle the error appropriately, such as displaying an error message to the user
+        }
+    }
+
+    // Add event listener to the "Place Order" button
+    const placeOrderButton = document.querySelector(".btn.border-secondary");
+    placeOrderButton.addEventListener("click", placeOrder);
   
     await fetchCartData(); // Fetch the cart data and display it
   });
