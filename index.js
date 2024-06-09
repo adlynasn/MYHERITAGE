@@ -14,9 +14,7 @@ const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const session = require("express-session"); // Import express-session
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
-const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
-
 
 const multer = require("multer");
 
@@ -131,18 +129,6 @@ const Storage = multer.diskStorage({
 const upload = multer({
   storage: Storage,
 }).single("image");
-
-
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({
-  storage: Storage,
-}).single("image");
-
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -275,9 +261,6 @@ app.get("/cart", async (req, res) => {
   try {
     await client.connect();
     const database = client.db("myheritageDB");
-
-    const collection = database.collection("cart");
-
     const collection = database.collection("carts");
 
 
