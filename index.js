@@ -657,6 +657,7 @@ app.post('/change-password', async (req, res) => {
     res.status(500).send('Server error');
   }});
 
+
 // PUT route to update a product
 app.put("/updateProduct/:id", async (req, res) => {
   const client = new MongoClient(uri);
