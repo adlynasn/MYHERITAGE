@@ -1,6 +1,6 @@
 const express = require("express");
 const dbConnect = require("./config/dbConnect");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require("dotenv").config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -8,11 +8,15 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
-const categoryRouter = require("./routes/categories");
 const cartRouter = require("./routes/cartRoute");
-const { notFound, errorHandler } = require("./middlewares/errorHandler");
+const categoryRouter = require("./routes/categories");
+const session = require("express-session"); // Import express-session
+const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
+
+const { notFound, errorHandler } = require("./middlewares/errorHandler");
+
 
 const multer = require("multer");
 
@@ -20,8 +24,63 @@ const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
 
-// Connect to the database
 dbConnect();
+
+// Define isAuthenticated middleware function
+function isAuthenticated(req, res, next) {
+  // Check if user is authenticated (for example, check if userID is stored in session)
+  if (req.session.userID) {
+    // If authenticated, proceed to the next middleware or route handler
+    next();
+  } else {
+    // If not authenticated, redirect the user to the login page or send an error response
+    res.redirect("/login"); // Assuming there's a login route where users can authenticate
+  }
+}
+
+// Session store configuration
+const store = new MongoDBStore({
+  uri: process.env.MONGODB_URL, // Use your MongoDB URI
+  collection: "sessions",
+});
+
+// Catch errors
+store.on("error", function (error) {
+  console.error("Session store error:", error);
+});
+
+// MongoDB connection URI
+const uri =
+  "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
+
+// Create a MongoClient instance
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Connect to MongoDB
+client
+  .connect()
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  });
+
+// Session middleware setup
+app.use(
+  session({
+    secret: process.env.JWT_SECRET, // Use an environment variable for the secret
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
 
 // Middleware setup
 app.use(bodyParser.json());
@@ -68,17 +127,6 @@ app.post("/addUser", async (req, res) => {
     await client.close();
   }
 });
-//storage multer
-
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({
-  storage: Storage,
-}).single("image");
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -107,6 +155,7 @@ app.post("/upload", (req, res) => {
     }
   });
 });
+
 app.post("/loginUser", async (req, res) => {
   // MongoDB connection URI
   const uri =
@@ -202,6 +251,7 @@ app.get("/api/featured-products", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 
 app.get("/cart", async (req, res) => {
   const uri =
@@ -306,6 +356,367 @@ app.post("/cart/update", async (req, res) => {
   } catch (error) {
       console.error("Error updating cart:", error);
       res.status(500).json({ success: false, error: "Error updating cart" });
+  }
+});
+
+app.post("/submitArtisanReview", async (req, res) => {
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("artisanReview");
+
+    const review = {
+      orderId: req.body.orderId,
+      review: req.body.review,
+      rating: req.body.rating,
+    };
+
+    const result = await collection.insertOne(review);
+    res.status(201).send(`Review submitted successfully`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error submitting review");
+  } finally {
+    await client.close();
+  }
+});
+
+app.post("/submitProductReview", async (req, res) => {
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("productReview");
+
+    const review = {
+      orderId: req.body.orderId,
+      review: req.body.review,
+      rating: req.body.rating,
+    };
+
+    const result = await collection.insertOne(review);
+    res.status(201).send(`Review submitted successfully`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error submitting review");
+  } finally {
+    await client.close();
+  }
+});
+
+// ADMIN FUNCTION
+
+app.post("/loginAdmin", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("admin");
+
+    const admin = await collection.findOne({ email: req.body.email });
+
+    if (admin && (await bcrypt.compare(req.body.password, admin.password))) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false, message: "Invalid email or password" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Error logging in admin" });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post("/addProduct", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("products");
+
+    const product = {
+      name: req.body.name,
+      description: req.body.description,
+      artisanName: req.body.artisanName,
+      image: req.body.image || [], // Assuming you're passing an array of image URLs
+      price: parseFloat(req.body.price), // Assuming price is a number
+      category: req.body.category, // Assuming you have a category field
+      countInStock: parseInt(req.body.countInStock), // Assuming countInStock is a number
+      rating: parseInt(req.body.rating), // Assuming rating is a number
+      numReviews: parseInt(req.body.numReviews), // Assuming numReviews is a number
+      isFeatured: req.body.isFeatured === "true" || false, // Assuming isFeatured is a boolean
+      dateCreated: new Date(), // Assuming you want to store the creation date
+    };
+
+    const result = await collection.insertOne(product);
+    res.status(201).send(`Product added with ID: ${result.insertedId}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error adding product");
+  } finally {
+    await client.close();
+  }
+});
+
+app.get("/getProducts", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("products");
+
+    const products = await collection.find({}).toArray();
+
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving products");
+  } finally {
+    await client.close();
+  }
+});
+
+app.delete("/deleteProduct/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const productId = req.params.id;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("products");
+
+    const result = await collection.deleteOne({ _id: new ObjectId(productId) });
+
+    if (result.deletedCount === 1) {
+      res.status(200).send("Product deleted successfully");
+    } else {
+      res.status(404).send("Product not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting product");
+  } finally {
+    await client.close();
+  }
+});
+
+
+// Corrected /change-password Route with Predefined ID
+app.post('/change-password', async (req, res) => {
+  const client = new MongoClient(uri);
+  const predefinedUserId = '665de9438d48ef4b168eee50'; // predefined user ID
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const usersCollection = database.collection("users");
+
+    const user = await usersCollection.findOne({ _id: new ObjectId(predefinedUserId) });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    if (user.password !== currentPassword) {
+      return res.status(400).send('Current password is incorrect');
+    }
+
+    await usersCollection.updateOne(
+      { _id: new ObjectId(predefinedUserId) },
+      { $set: { password: newPassword } }
+    );
+
+    res.send('Password has been successfully changed');
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).send('Server error');
+  }});
+
+
+// PUT route to update a product
+app.put("/updateProduct/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const productId = req.params.id;
+  const updatedProduct = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("products");
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(productId) },
+      { $set: updatedProduct }
+    );
+
+    if (result.matchedCount === 1) {
+      res.status(200).send("Product updated successfully");
+    } else {
+      res.status(404).send("Product not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error updating product");
+  } finally {
+    await client.close();
+  }
+});
+
+// Example of the existing GET route
+app.get("/getProducts", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("products");
+
+    const products = await collection.find({}).toArray();
+
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving products");
+  } finally {
+    await client.close();
+  }
+});
+
+//artisan management
+
+app.post("/addArtisan", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("artisans");
+
+    const product = {
+      artisanName: req.body.artisanName,
+      email: req.body.email,
+      contact: req.body.contact,
+      category: req.body.category, // Assuming you have a category field
+      image: req.body.image || [], // Assuming you're passing an array of image URLs
+      dateCreated: new Date(), // Assuming you want to store the creation date
+    };
+
+    const result = await collection.insertOne(product);
+    res.status(201).send(`Artisan added with ID: ${result.insertedId}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error adding artisan");
+  } finally {
+    await client.close();
+  }
+});
+
+app.get("/getArtisans", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("artisans");
+
+    const products = await collection.find({}).toArray();
+
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving artisans");
+  } finally {
+    await client.close();
+  }
+});
+
+app.delete("/deleteArtisan/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const artisanId = req.params.id;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("artisans");
+
+    const result = await collection.deleteOne({ _id: new ObjectId(artisanId) });
+
+    if (result.deletedCount === 1) {
+      res.status(200).send("Artisan deleted successfully");
+    } else {
+      res.status(404).send("Artisan not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting artisan");
+  } finally {
+    await client.close();
+  }
+});
+
+//categories
+app.get("/getCategories", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("categories");
+
+    const categories = await collection.find({}).toArray();
+
+    res.json(categories);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving categories");
+  } finally {
+    await client.close();
+  }
+});
+
+//get artisan Id
+app.get("/getArtisansList", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("artisans");
+
+    const artisans = await collection.find({}).toArray();
+
+    res.json(artisans);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving artisans");
+  } finally {
+    await client.close();
+  }
+});
+
+//inquiries
+app.get("/getInquiries", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("inquiries");
+
+    const products = await collection.find({}).toArray();
+
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving inquiries");
+
+  } finally {
+    await client.close();
   }
 });
 

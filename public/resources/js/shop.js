@@ -113,82 +113,77 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return `
-              <div class="col-md-6 col-lg-6 col-xl-4" style ="margin-bottom: 50px">
-                  <div class="rounded position-relative fruite-item" style="width: 300px; height: 300px; margin-bottom: 200px;">
-                      <div class="fruite-img" style="width: 100%; height: 100%;">
-                          <img src="${imagePath}" class="img-fluid w-100 rounded-top" alt="${
+          <div class="col-md-6 col-lg-6 col-xl-4" style ="margin-bottom: 50px">
+            <div class="rounded position-relative fruite-item" style="width: 300px; height: 300px; margin-bottom: 200px;">
+              <div class="fruite-img" style="width: 100%; height: 100%;">
+                <img src="${imagePath}" class="img-fluid w-100 rounded-top" alt="${
           product.name
         }" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                      </div>
-                      <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                          ${
-                            product.category
-                              ? product.category.name
-                              : "Uncategorized"
-                          }
-                      </div>
-                      <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                          <h4><a href="singularproduct.html?id=${
-                            product._id
-                          }">${product.name}</a></h4>
-                          <p>${product.description}</p>
-                          <div class="d-flex justify-content-between flex-lg-wrap">
-                              <p class="text-dark fs-5 fw-bold mb-0">RM${
-                                product.price
-                              }</p>
-                              <a href="#" class="add-to-cart-btn border border-secondary rounded-pill px-3 text-white" data-product-id="${product._id}">
-                                  <i class="fa fa-shopping-bag me-2 text-white"></i> Add to cart
-                              </a>
-                          </div>
-                      </div>
-                  </div>
               </div>
-          `;
+              <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                ${product.category ? product.category.name : "Uncategorized"}
+              </div>
+              <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                <h4><a href="singularproduct.html?id=${product._id}">${
+          product.name
+        }</a></h4>
+                <p>${product.description}</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                  <p class="text-dark fs-5 fw-bold mb-0">RM${product.price}</p>
+                  <a href="#" class="add-to-cart-btn border border-secondary rounded-pill px-3 text-white" data-product-id="${
+                    product._id
+                  }">
+                    <i class="fa fa-shopping-bag me-2 text-white"></i> Add to cart
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
       })
       .join("");
 
     productsContainer.innerHTML = productHtml;
-    
+
     // Attach event listeners to "Add to cart" links
     const addToCartLinks = document.querySelectorAll(".add-to-cart-btn");
     addToCartLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          const productId = link.getAttribute("data-product-id");
-          const userId = "665de9438d48ef4b168eee50"; // Hardcoded userID
+      link.addEventListener("click", () => {
+        const productId = link.getAttribute("data-product-id");
+        const userId = "665de9438d48ef4b168eee50"; // Hardcoded userID
 
-          // Call the function to add the product to the cart
-          addToCart(userId, productId);
-        });
+        // Call the function to add the product to the cart
+        addToCart(userId, productId);
+      });
     });
-}
+  }
 
+  // Function to add a product to the cart
+  async function addToCart(userId, productId) {
+    try {
+      const response = await fetch("/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          productId: productId,
+          quantity: 1, // You can adjust the quantity as needed
+        }),
+      });
 
-    // Function to add a product to the cart
-    async function addToCart(userId, productId) {
-      try {
-        const response = await fetch("/cart/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            userId: userId,
-            productId: productId,
-            quantity: 1 // You can adjust the quantity as needed
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-
-          const responseData = await response.json();
-          console.log("Response from server:", responseData); // Debugging log
-          alert(responseData.message); // Display a message to the user
-      } catch (error) {
-          console.error("Error adding item to cart:", error);
-          alert("Error adding item to cart. Please try again later."); // Display an error message to the user
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
       }
+
+      const responseData = await response.json();
+      console.log("Response from server:", responseData); // Debugging log
+      alert(responseData.message); // Display a message to the user
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      alert("Error adding item to cart. Please try again later."); // Display an error message to the user
+    }
   }
 
   function displayFeaturedProducts(productsArray) {
@@ -207,39 +202,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return `
-            <a href="singularproduct.html?id=${
-              product._id
-            }" class="d-flex align-items-center justify-content-start text-decoration-none text-dark">
-                <div class="rounded me-4" style="width: 100px; height: 100px;">
-                    <img src="${imagePath}" class="img-fluid rounded" alt="${
+          <a href="singularproduct.html?id=${
+            product._id
+          }" class="d-flex align-items-center justify-content-start text-decoration-none text-dark">
+            <div class="rounded me-4" style="width: 100px; height: 100px;">
+              <img src="${imagePath}" class="img-fluid rounded" alt="${
           product.name
         }">
-                </div>
-                <div>
-                    <h6 class="mb-2">${product.name}</h6>
-                    <div class="d-flex mb-2">
-                        <i class="fa fa-star text-secondary"></i>
-                        <i class="fa fa-star text-secondary"></i>
-                        <i class="fa fa-star text-secondary"></i>
-                        <i class="fa fa-star text-secondary"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                    <div class="d-flex mb-2">
-                        <h5 class="fw-bold me-2">RM${product.price}</h5>
-                        ${
-                          product.originalPrice
-                            ? `<h5 class="text-danger text-decoration-line-through">RM${product.originalPrice}</h5>`
-                            : ""
-                        }
-                    </div>
-                </div>
-            </a>
+            </div>
+            <div>
+              <h6 class="mb-2">${product.name}</h6>
+              <div class="d-flex mb-2">
+                <i class="fa fa-star text-secondary"></i>
+                <i class="fa fa-star text-secondary"></i>
+                <i class="fa fa-star text-secondary"></i>
+                <i class="fa fa-star text-secondary"></i>
+                <i class="fa fa-star"></i>
+              </div>
+              <div class="d-flex mb-2">
+                <h5 class="fw-bold me-2">RM${product.price}</h5>
+                ${
+                  product.originalPrice
+                    ? `<h5 class="text-danger text-decoration-line-through">RM${product.originalPrice}</h5>`
+                    : ""
+                }
+              </div>
+            </div>
+          </a>
         `;
       })
       .join("");
     featuredProductsContainer.innerHTML = featuredProductHtml;
   }
-  
+
   // Function to sort products
   function sortProducts(sortBy) {
     if (!Array.isArray(products)) {
@@ -247,7 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let sortedProducts = [...products]; // Create a copy of the products array to sort
+    // Create a copy of the products array to sort
+    let sortedProducts = [...products];
 
     if (sortBy === "Price") {
       sortedProducts.sort((a, b) => a.price - b.price);
@@ -258,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Sorted products:", sortedProducts); // Debugging log
     displayProducts(sortedProducts);
   }
-  
+
   // Function to filter products by category
   function filterProducts(category) {
     let filteredProducts = [];
