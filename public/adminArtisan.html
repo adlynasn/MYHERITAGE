@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MyHeritage - Artisan Management</title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="../assets/images/MYHeritage_Brand.png"
+    />
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  </head>
+
+  <body>
+    <!--  Body Wrapper -->
+    <div
+      class="page-wrapper"
+      id="main-wrapper"
+      data-layout="vertical"
+      data-navbarbg="skin6"
+      data-sidebartype="full"
+      data-sidebar-position="fixed"
+      data-header-position="fixed"
+    >
+      <!-- Sidebar Start -->
+      <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div>
+          <div
+            class="brand-logo d-flex align-items-center justify-content-between"
+          >
+            <a href="./indexAdmin.html" class="text-nowrap logo-img">
+              <img
+                src="../assets/images/MYHeritage_Logo.png"
+                width="180"
+                alt=""
+              />
+            </a>
+            <div
+              class="close-btn d-xl-none d-block sidebartoggler cursor-pointer"
+              id="sidebarCollapse"
+            >
+              <i class="ti ti-x fs-8"></i>
+            </div>
+          </div>
+          <!-- Sidebar navigation-->
+          <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+            <ul id="sidebarnav">
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Home</span>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="./index.html"
+                  aria-expanded="false"
+                >
+                  <span>
+                    <i class="ti ti-layout-dashboard"></i>
+                  </span>
+                  <span class="hide-menu">Dashboard</span>
+                </a>
+              </li>
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">CATEGORIES</span>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="./adminProduct.html"
+                  aria-expanded="false"
+                >
+                  <span>
+                    <i class="ti ti-article"></i>
+                  </span>
+                  <span class="hide-menu">Products</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="./adminArtisan.html"
+                  aria-expanded="false"
+                >
+                  <span>
+                    <i class="ti ti-alert-circle"></i>
+                  </span>
+                  <span class="hide-menu">Artisans</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="./adminInquiries.html"
+                  aria-expanded="false"
+                >
+                  <span>
+                    <i class="ti ti-typography"></i>
+                  </span>
+                  <span class="hide-menu">Inquiries</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  href="./adminCategories.html"
+                  aria-expanded="false"
+                >
+                  <span>
+                    <i class="ti ti-plus"></i>
+                  </span>
+                  <span class="hide-menu">Categories</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+      </aside>
+      <!--  Sidebar End -->
+      <!--  Main wrapper -->
+      <div class="body-wrapper">
+        <!--  Header Start -->
+        <header class="app-header">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <ul class="navbar-nav">
+              <li class="nav-item d-block d-xl-none">
+                <a
+                  class="nav-link sidebartoggler nav-icon-hover"
+                  id="headerCollapse"
+                  href="javascript:void(0)"
+                >
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
+            </ul>
+            <div
+              class="navbar-collapse justify-content-end px-0"
+              id="navbarNav"
+            >
+              <ul
+                class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
+              >
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link nav-icon-hover"
+                    href="javascript:void(0)"
+                    id="drop2"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src="../assets/images/profile/user-1.jpg"
+                      alt=""
+                      width="35"
+                      height="35"
+                      class="rounded-circle"
+                    />
+                  </a>
+                  <div
+                    class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                    aria-labelledby="drop2"
+                  >
+                    <div class="message-body">
+                      <a
+                        href="./dashboard-acc.html"
+                        class="d-flex align-items-center gap-2 dropdown-item"
+                      >
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">Account Details</p>
+                      </a>
+                      <!-- <a
+                     href="javascript:void(0)"
+                     class="d-flex align-items-center gap-2 dropdown-item"
+                   >
+                     <i class="ti ti-mail fs-6"></i>
+                     <p class="mb-0 fs-3">My Account</p>
+                   </a> -->
+                      <a
+                        href="./authentication-login.html"
+                        class="btn btn-outline-primary mx-3 mt-2 d-block"
+                        >Logout</a
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </header>
+        <!--  Header End -->
+        <div class="container-fluid">
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title fw-semibold mb-4">Add Artisan</h5>
+                <form id="addArtisanForm">
+                  <div class="mb-3">
+                    <label for="productName" class="form-label"
+                      >Artisan Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="artisanName"
+                      placeholder="Enter artisan name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-control" id="category" required>
+                      <option value="">Select Category</option>
+                      <!-- Categories will be dynamically populated here -->
+                    </select>
+                  </div>
+                  <script>
+                    let categoriesMap = {};
+
+                    // Fetch categories from server
+                    fetch("/getCategories")
+                      .then((response) => response.json())
+                      .then((categories) => {
+                        const categorySelect =
+                          document.getElementById("category");
+                        // Loop through categories and create option elements
+                        categories.forEach((category) => {
+                          const option = document.createElement("option");
+                          option.value = category._id; // Set the value of the option to category ID
+                          option.textContent = category.name; // Set the text content of the option to category name
+                          categorySelect.appendChild(option); // Append the option to the select element
+
+                          // Store category in a map for quick lookup
+                          categoriesMap[category._id] = category.name;
+                        });
+                      })
+                      .catch((error) => {
+                        console.error("Error fetching categories:", error);
+                      });
+                  </script>
+
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      placeholder="Enter artisan email"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="contact" class="form-label"
+                      >Contact Number</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="contact"
+                      placeholder="Enter contact number"
+                    />
+                  </div>
+
+                  <!-- <div class="mb-3" id="variations-container">
+                    <label for="variations" class="form-label"
+                      >Social Media Account Links</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control variation-input"
+                        id="variations"
+                        placeholder="Enter product variation"
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary add-variation-btn"
+                      >
+                        <i class="ti ti-plus"></i>
+                      </button>
+                    </div>
+                  </div> -->
+                  <div class="mb-3">
+                    <label for="images" class="form-label">Images</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="images"
+                      multiple
+                      accept="image/*"
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Add Artisan
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Notification -->
+            <div
+              id="notification"
+              style="
+                display: none;
+                position: fixed;
+                top: 10%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: green;
+                color: white;
+                padding: 20px;
+                z-index: 1000;
+                border-radius: 5px;
+              "
+            >
+              Artisan Successfully Added!
+            </div>
+            <!-- Add New Artisan -->
+            <script>
+              document
+                .getElementById("addArtisanForm")
+                .addEventListener("submit", async function (event) {
+                  event.preventDefault();
+
+                  const formData = {
+                    artisanName: document.getElementById("artisanName").value,
+                    email: document.getElementById("email").value,
+                    contact: document.getElementById("contact").value,
+                    // image: document.getElementById("image").value,
+                    category: document.getElementById("category").value,
+                  };
+
+                  try {
+                    const response = await fetch("/addArtisan", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(formData),
+                    });
+
+                    if (response.ok) {
+                      // Show notification
+                      const notification =
+                        document.getElementById("notification");
+                      notification.style.display = "block";
+                    } else {
+                      console.error("Failed to add artisan.");
+                    }
+                  } catch (error) {
+                    console.error("Error:", error);
+                  }
+                });
+            </script>
+            <!-- Artisan List -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title fw-semibold mb-4">Current Artisans</h5>
+                <div id="artisan-list" class="table-responsive">
+                  <!-- Product list will be dynamically generated here -->
+                </div>
+              </div>
+            </div>
+
+            <script>
+              // Fetch artisans from server
+              fetch("/getArtisans")
+                .then((response) => response.json())
+                .then((artisans) => {
+                  const artisanListDiv =
+                    document.getElementById("artisan-list");
+
+                  // Create the table
+                  const table = document.createElement("table");
+                  table.classList.add(
+                    "table",
+                    "table-bordered",
+                    "table-striped"
+                  );
+
+                  // Create the table header
+                  const thead = document.createElement("thead");
+                  thead.innerHTML = `
+                      <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Contact Number</th>
+                          <th>Category Id</th>
+                          <th>Category Name</th>
+\                          <th>Action</th>
+                      </tr>
+                  `;
+                  table.appendChild(thead);
+
+                  // Create the table body
+                  const tbody = document.createElement("tbody");
+                  artisans.forEach((artisan) => {
+                    const tr = document.createElement("tr");
+                    const categoryName =
+                      categoriesMap[artisan.category] || "Unknown Category";
+
+                    tr.innerHTML = `
+                          <td>${artisan.artisanName}</td>
+                          <td>${artisan.email}</td>
+                          <td>+6${artisan.contact}</td>
+                          <td>${artisan.category}</td>
+                          <td>${categoryName}</td>
+
+                          <td>
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="deleteArtisan('${artisan._id}')">Delete</button>
+                              </div>
+                              
+                          </td>
+                      `;
+                    tbody.appendChild(tr);
+                  });
+                  table.appendChild(tbody);
+
+                  // Append the table to the product list div
+                  artisanListDiv.appendChild(table);
+                })
+                .catch((error) => {
+                  console.error("Error fetching products:", error);
+                });
+            </script>
+            <script>
+              async function deleteArtisan(artisanId) {
+                if (confirm("Are you sure you want to delete this artisan?")) {
+                  try {
+                    const response = await fetch(
+                      `/deleteArtisan/${artisanId}`,
+                      {
+                        method: "DELETE",
+                      }
+                    );
+
+                    if (response.ok) {
+                      alert("Artisan deleted successfully");
+                      // Optionally, you can remove the deleted product from the UI
+                      document.getElementById(`artisan-${artisanId}`).remove();
+                    } else {
+                      // const errorText = await response.text();
+                      console.error(`Failed to delete artisan: ${errorText}`);
+                    }
+                  } catch (error) {
+                    console.error("Error:", error);
+                  }
+                }
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/sidebarmenu.js"></script>
+    <script src="../assets/js/app.min.js"></script>
+    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  </body>
+</html>
