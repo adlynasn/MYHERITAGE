@@ -8,15 +8,12 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
-const categoryRouter = require("./routes/categories");
 const cartRouter = require("./routes/cartRoute");
-const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const session = require("express-session"); // Import express-session
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
-const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
 
-const multer = require("multer");
+const multer=require('multer')
 
 const app = express();
 const api = process.env.API_URL;
@@ -87,7 +84,7 @@ app.use(morgan("tiny"));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Use the routers for specified paths
 app.use(`${api}/user`, usersRouter);
@@ -164,6 +161,7 @@ app.post("/upload", (req, res) => {
     }
   });
 });
+
 app.post("/loginUser", async (req, res) => {
   // MongoDB connection URI
   const uri =
@@ -251,6 +249,26 @@ app.get("/api/products/:id", async (req, res) => {
 });
 
 app.get("/api/featured-products", async (req, res) => {
+  try {
+    // Assuming you have a Product model and 'isFeatured' is a boolean attribute
+    const featuredProducts = await Product.find({ isFeatured: true }).limit(3);
+    res.json(featuredProducts);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).populate('category');
+    if (!product) {
+      return res.status(404).send({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+app.get('/api/featured-products', async (req, res) => {
   try {
     // Assuming you have a Product model and 'isFeatured' is a boolean attribute
     const featuredProducts = await Product.find({ isFeatured: true }).limit(3);
