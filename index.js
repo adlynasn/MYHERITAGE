@@ -39,12 +39,12 @@ function isAuthenticated(req, res, next) {
 // Session store configuration
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URL, // Use your MongoDB URI
-  collection: 'sessions'
+  collection: "sessions",
 });
 
 // Catch errors
-store.on('error', function(error) {
-  console.error('Session store error:', error);
+store.on("error", function (error) {
+  console.error("Session store error:", error);
 });
 
 // MongoDB connection URI
@@ -52,26 +52,33 @@ const uri =
   "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
 
 // Create a MongoClient instance
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// Connect to MongoDB
-client.connect().then(() => {
-  console.log("Connected to MongoDB");
-}).catch(err => {
-  console.error("Error connecting to MongoDB:", err);
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-// Session middleware setup
-app.use(session({
-  secret: process.env.JWT_SECRET, // Use an environment variable for the secret
-  resave: false,
-  saveUninitialized: false,
-  store: store,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
-}));
+// Connect to MongoDB
+client
+  .connect()
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  });
 
+// Session middleware setup
+app.use(
+  session({
+    secret: process.env.JWT_SECRET, // Use an environment variable for the secret
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
 
 // Middleware setup
 app.use(bodyParser.json());
@@ -129,18 +136,6 @@ const Storage = multer.diskStorage({
 const upload = multer({
   storage: Storage,
 }).single("image");
-
-
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({
-  storage: Storage,
-}).single("image");
-
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -273,11 +268,7 @@ app.get("/cart", async (req, res) => {
   try {
     await client.connect();
     const database = client.db("myheritageDB");
-
-    const collection = database.collection("cart");
-
     const collection = database.collection("carts");
-
 
     // Assuming you have only one cart data stored in the collection
     const cart = await collection.findOne();
@@ -294,7 +285,6 @@ app.get("/cart", async (req, res) => {
     await client.close();
   }
 });
-
 
 // MongoDB Operations
 app.post("/addUser", async (req, res) => {
@@ -436,13 +426,17 @@ app.post("/cart/add", async (req, res) => {
 
     // Perform any necessary validation, such as checking if userId and productId are provided
     if (!userId || !productId) {
-      return res.status(400).json({ success: false, error: "User ID and product ID are required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "User ID and product ID are required" });
     }
 
     // Fetch the product details from the database using the productId
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({ success: false, error: "Product not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Product not found" });
     }
 
     // Construct the cart object including product details
@@ -452,7 +446,7 @@ app.post("/cart/add", async (req, res) => {
       quantity: 1, // Quantity can be adjusted as needed
       price: product.price,
       imagePath: product.imagePath, // Assuming imagePath is a field in your Product model
-      total: product.price // Initial total is price * quantity (1)
+      total: product.price, // Initial total is price * quantity (1)
     };
 
     // Find the user's cart or create a new one if it doesn't exist
@@ -462,7 +456,9 @@ app.post("/cart/add", async (req, res) => {
       userCart = new Cart({ userId, items: [cartItem] });
     } else {
       // If the user's cart already exists, check if the product is already in the cart
-      const existingItemIndex = userCart.items.findIndex(item => item.productId === productId);
+      const existingItemIndex = userCart.items.findIndex(
+        (item) => item.productId === productId
+      );
       if (existingItemIndex !== -1) {
         // If the product already exists in the cart, increase the quantity
         userCart.items[existingItemIndex].quantity++;
@@ -476,40 +472,47 @@ app.post("/cart/add", async (req, res) => {
     await userCart.save();
 
     // Return a success message or any relevant data
-    res.json({ success: true, message: "Product added to cart successfully", userCart });
+    res.json({
+      success: true,
+      message: "Product added to cart successfully",
+      userCart,
+    });
   } catch (error) {
     console.error("Error adding item to cart:", error);
-    res.status(500).json({ success: false, error: "Error adding item to cart" });
+    res
+      .status(500)
+      .json({ success: false, error: "Error adding item to cart" });
   }
 });
 
 // POST route to handle updating cart quantities
 app.post("/cart/update", async (req, res) => {
   try {
-      const { userId, quantities } = req.body;
+    const { userId, quantities } = req.body;
 
-      let userCart = await Cart.findOne({ userId });
-      if (!userCart) {
-          return res.status(404).json({ success: false, error: "Cart not found" });
+    let userCart = await Cart.findOne({ userId });
+    if (!userCart) {
+      return res.status(404).json({ success: false, error: "Cart not found" });
+    }
+
+    quantities.forEach((q) => {
+      const itemIndex = userCart.items.findIndex((item) =>
+        item.productId.equals(q.productId)
+      );
+      if (itemIndex !== -1) {
+        userCart.items[itemIndex].quantity = q.quantity;
+        userCart.items[itemIndex].total =
+          q.quantity * userCart.items[itemIndex].price;
       }
+    });
 
-      quantities.forEach(q => {
-          const itemIndex = userCart.items.findIndex(item => item.productId.equals(q.productId));
-          if (itemIndex !== -1) {
-              userCart.items[itemIndex].quantity = q.quantity;
-              userCart.items[itemIndex].total = q.quantity * userCart.items[itemIndex].price;
-          }
-      });
-
-      await userCart.save();
-      res.json({ success: true, message: "Cart updated successfully", userCart });
+    await userCart.save();
+    res.json({ success: true, message: "Cart updated successfully", userCart });
   } catch (error) {
-      console.error("Error updating cart:", error);
-      res.status(500).json({ success: false, error: "Error updating cart" });
+    console.error("Error updating cart:", error);
+    res.status(500).json({ success: false, error: "Error updating cart" });
   }
 });
-
-
 
 // Error handling middlewares
 app.use(notFound);
