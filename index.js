@@ -118,17 +118,6 @@ app.post("/addUser", async (req, res) => {
     await client.close();
   }
 });
-//storage multer
-
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({
-  storage: Storage,
-}).single("image");
 
 
 const Storage = multer.diskStorage({
@@ -274,7 +263,6 @@ app.get("/cart", async (req, res) => {
     await client.connect();
     const database = client.db("myheritageDB");
 
-    const collection = database.collection("cart");
 
     const collection = database.collection("carts");
 
