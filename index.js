@@ -655,6 +655,7 @@ app.post('/change-password', async (req, res) => {
   } catch (error) {
     console.error("Error changing password:", error);
     res.status(500).send('Server error');
+  }});
 
 // PUT route to update a product
 app.put("/updateProduct/:id", async (req, res) => {
