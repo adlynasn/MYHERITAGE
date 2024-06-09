@@ -47,6 +47,22 @@
           <!-- <img src="media/MYHeritage_Logo.png" alt="MyHeritage Logo" /> -->
         </a>
 
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-awesome fas fa-bars"> </span>
+          <span class="navbar-toggler-awesome fas fa-times"></span>
+        </button>
+
+        <!-- end of mobile menu toggle button -->
+
         <button
           class="navbar-toggler"
           type="button"
@@ -62,7 +78,7 @@
         <div class="collapse navbar-collapse" id="navbarsFurni">
           <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
             <li><a class="nav-link" href="index.html">Home</a></li>
-            <li><a class="nav-link" href="#">Shop</a></li>
+            <li><a class="nav-link" href="shop.html">Shop</a></li>
             <li><a class="nav-link" href="artisan.html">Artisans</a></li>
             <li><a class="nav-link" href="homeAboutUs.html">About Us</a></li>
             <li>
@@ -77,13 +93,14 @@
               ></a>
               <!-- <div id="user-button"></div> -->
             </li>
-
+            
             <li class="active-page">
               <!-- This indicates the active state -->
               <a class="nav-link" href="cart.html">
                 <i class="bx bx-cart"></i>
               </a>
             </li>
+            
             <li>
               <a
                 class="nav-link"
@@ -99,141 +116,81 @@
     <!-- End Header/Navigation -->
     
     <!-- Checkout Page Start -->
-
     <div class="container-fluid py-3">
-        <div class="container py-3">
-            <h1 class="mb-4">Billing details</h1>
-            <form action="#">
-                <div class="row g-5">
-                    <div class="col-md-12 col-lg-6 col-xl-7">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-6">
-                                <div class="form-item w-100">
-                                    <label class="form-label my-3">First Name<sup>*</sup></label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-6">
-                                <div class="form-item w-100">
-                                    <label class="form-label my-3">Last Name<sup>*</sup></label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Address <sup>*</sup></label>
-                            <input type="text" class="form-control" placeholder="House Number Street Name">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Town/City<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">State<sup>*</sup></label>
-                            <select class="form-control">
-                                <option value="" disabled selected>Select your state</option> <!-- Placeholder -->
-                                <option value="Johor">Johor</option>
-                                <option value="Kedah">Kedah</option>
-                                <option value="Kelantan">Kelantan</option>
-                                <option value="Melaka">Melaka</option>
-                                <option value="Negeri Sembilan">Negeri Sembilan</option>
-                                <option value="Pahang">Pahang</option>
-                                <option value="Perak">Perak</option>
-                                <option value="Perlis">Perlis</option>
-                                <option value="Pulau Pinang">Pulau Pinang</option>
-                                <option value="Sabah">Sabah</option>
-                                <option value="Sarawak">Sarawak</option>
-                                <option value="Selangor">Selangor</option>
-                                <option value="Terengganu">Terengganu</option>
-                                <option value="Kuala Lumpur">Kuala Lumpur</option>
-                                <option value="Labuan">Labuan</option>
-                                <option value="Putrajaya">Putrajaya</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-item">
-                            <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Mobile<sup>*</sup></label>
-                            <input type="tel" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Email Address<sup>*</sup></label>
-                            <input type="email" class="form-control">
-                        </div>
-                        <hr>
-                        <div class="form-item">
-                            <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Order Notes (Optional)"></textarea>
+      <div class="container py-3">
+          <h1 class="mb-4">Billing details</h1>
+          <!-- Placeholder for user information -->
+          <div class="row g-5">
+            <div class="col-md-12 col-lg-6 col-xl-7">
+              <div id="user-information"> 
+                <p><strong>Name:</strong> Mirza Azhan Bin Hazmirul</p>
+                <p><strong>Mobile:</strong> 0123818067</p>
+                <p><strong>Email:</strong> mirzaazhan@gmail.com</p>
+                <p><strong>Address:</strong> no.9 jalan aman cheria 4, bandar tropicana aman</p>
+              </div>
+            </div>          
+              <div class="col-md-12 col-lg-6 col-xl-5">
+                  <div class="table-responsive">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">Products</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Total</th>
+                              </tr>
+                          </thead>
+                          <tbody id="cart-items-body">
+                              <!-- Placeholder for dynamically fetched cart items -->
+                          </tbody>
+                      </table>
+                  </div>
+                  
+                  <div class="p-2"> <!-- Reduced padding for smaller div -->
+                    <div class="d-flex justify-content-between mb-2"> <!-- Reduced margin bottom for smaller row -->
+                        <h5 class="mb-0 me-2">Subtotal:</h5> <!-- Reduced margin right for smaller text -->
+                        <p class="mb-0" id="cart-subtotal"></p> <!-- Added ID for easy selection -->
+                    </div>
+                    <div class="d-flex justify-content-between mb-2"> <!-- Reduced margin bottom for smaller row -->
+                        <h5 class="mb-0 me-2">Shipping</h5> <!-- Reduced margin right for smaller text -->
+                        <div class="">
+                            <p class="mb-0">Flat rate: RM8.00</p>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-6 col-xl-5">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Products</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cart-items-body">
-                                  <!-- Placeholder for dynamically fetched cart items -->
-                              </tbody>
-                            </table>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                            <div class="col-12">
-                                <div class="form-check text-start my-3">
-                                    <input type="radio" class="form-check-input bg-primary border-0" id="Transfer-1" name="Transfer" value="Transfer">
-                                    <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
-                                </div>
-                                <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                            <div class="col-12">
-                                <div class="form-check text-start my-3">
-                                    <input type="radio" class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments">
-                                    <label class="form-check-label" for="Payments-1">Check Payments</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                            <div class="col-12">
-                                <div class="form-check text-start my-3">
-                                    <input type="radio" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery">
-                                    <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                            <div class="col-12">
-                                <div class="form-check text-start my-3">
-                                    <input type="radio" class="form-check-input bg-primary border-0" id="Paypal-1" name="Paypal" value="Paypal">
-                                    <label class="form-check-label" for="Paypal-1">Paypal</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                            <a 
-                            href="thankyoupage.html" 
-                            class="btn border-secondary rounded-pill px-4 py-3 text-uppercase mb-4 ms-4" 
-                            style="color: white;" 
-                            role="button">
-                            Place Order
-                            </a>
-                        </div>
-                    </div>
+                    <p class="mb-0 text-end">Shipping to Semenanjung Malaysia only.</p>
                 </div>
-            </form>
-        </div>
-    </div>
-    <!-- Checkout Page End -->
+                <div class="py-2 mb-2 border-top border-bottom d-flex justify-content-between"> <!-- Reduced padding, margin bottom, and border size for smaller row -->
+                    <h5 class="mb-0 ps-2 me-2">Total</h5> <!-- Reduced padding left and margin right for smaller text -->
+                    <p class="mb-0 pe-2" id="cart-total" ></p> <!-- Reduced padding right for smaller text -->
+                </div>
+                
 
+                  <div class="row g-0 text-center align-items-center justify-content-center border-bottom py-2">
+                      <div class="col-12">
+                          <div class="form-check my-1">
+                              <input type="radio" class="form-check-input border-0 bg-custom" id="Delivery-1" name="Delivery" value="Delivery">
+                              <label class="form-check-label delivery-label" for="Delivery-1">Cash On Delivery</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row g-0 text-center align-items-center justify-content-center border-bottom py-2">
+                      <div class="col-12">
+                          <div class="form-check my-1">
+                              <input type="radio" class="form-check-input border-0 bg-custom" id="Transfer-1" name="Transfer" value="Transfer">
+                              <label class="form-check-label transfer-label" for="Transfer-1">Direct Bank Transfer</label>
+                          </div>
+                          <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                      </div>
+                  </div>
+                  <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                      <a href="thankyoupage.html" class="btn border-secondary rounded-pill px-4 py-3 text-uppercase mb-4 ms-4" style="color: white;" role="button">Place Order</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Checkout Page End -->
 
     <div class="before-footer-section">
         <!-- This area has top and bottom padding -->
@@ -353,8 +310,6 @@
         </div>
       </footer>
       <!-- End Footer Section -->
-  
       <script src="resources/js/checkout.js"></script>
     </body>
   </html>
-  

@@ -1194,4 +1194,63 @@ h1 {
     margin-bottom: 2.5rem;
     margin-left: auto;
   }
+
+/* Style for "Cash On Delivery" */
+.delivery-label {
+  font-weight: bold;
+  font-family: "DM Serif Display", sans-serif;
+  font-size: 14px;
+  color: #3b5d50;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  margin-left: 10px; /* Add a bit of space to the left */
+}
+
+/* Style for "Direct Bank Transfer" */
+.transfer-label {
+  font-weight: bold;
+  font-family: "DM Serif Display", sans-serif;
+  font-size: 14px;
+  color: #3b5d50;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  margin-left: 10px; /* Add a bit of space to the left */
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  padding: 5px 0; /* Reduce padding */
+  margin-left: 30px;
+  justify-content: flex-start; /* Align content to the left */
+}
+
+/* Adjust form-check-input spacing */
+.form-check-input {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Adjust alignment for labels */
+.form-check-label {
+  display: inline-block; /* Ensures the label takes up only the necessary space */
+  vertical-align: middle; /* Vertically center the label */
+}
+
+/* Style for radio buttons */
+.bg-custom {
+  background-color: #3b5d50;
+}
+
+
+
+
+
+
+
+
+
+
   
