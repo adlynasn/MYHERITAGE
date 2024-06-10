@@ -19,7 +19,6 @@ const MongoDBStore = require("connect-mongodb-session")(session); // Import conn
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
 const { User } = require("./models/userModel");
-
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
 const multer = require("multer");
@@ -290,7 +289,6 @@ app.get("/api/products/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 app.get("/api/featured-products", async (req, res) => {
   try {
     // Assuming you have a Product model and 'isFeatured' is a boolean attribute
@@ -300,7 +298,6 @@ app.get("/api/featured-products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 
 app.get("/cart", async (req, res) => {
   const uri =
