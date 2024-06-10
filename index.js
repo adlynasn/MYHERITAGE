@@ -18,7 +18,6 @@ const MongoDBStore = require("connect-mongodb-session")(session); // Import conn
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
 const { User } = require("./models/userModel");
-
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
 const multer = require("multer");
@@ -286,7 +285,6 @@ app.get("/api/products/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 app.get("/api/featured-products", async (req, res) => {
   try {
     // Assuming you have a Product model and 'isFeatured' is a boolean attribute
@@ -536,37 +534,7 @@ app.post("/loginAdmin", async (req, res) => {
   }
 });
 
-app.post("/addProduct", async (req, res) => {
-  const client = new MongoClient(uri);
 
-  try {
-    await client.connect();
-    const database = client.db("myheritageDB");
-    const collection = database.collection("products");
-
-    const product = {
-      name: req.body.name,
-      description: req.body.description,
-      artisanName: req.body.artisanName,
-      image: req.body.image || [], // Assuming you're passing an array of image URLs
-      price: parseFloat(req.body.price), // Assuming price is a number
-      category: req.body.category, // Assuming you have a category field
-      countInStock: parseInt(req.body.countInStock), // Assuming countInStock is a number
-      rating: parseInt(req.body.rating), // Assuming rating is a number
-      numReviews: parseInt(req.body.numReviews), // Assuming numReviews is a number
-      isFeatured: req.body.isFeatured === "true" || false, // Assuming isFeatured is a boolean
-      dateCreated: new Date(), // Assuming you want to store the creation date
-    };
-
-    const result = await collection.insertOne(product);
-    res.status(201).send(`Product added with ID: ${result.insertedId}`);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error adding product");
-  } finally {
-    await client.close();
-  }
-});
 
 app.get("/getProducts", async (req, res) => {
   const client = new MongoClient(uri);

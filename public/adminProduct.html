@@ -520,7 +520,7 @@
           formData.append("image", document.getElementById("image").files[0]);
 
           try {
-            const response = await fetch("/upload", {
+            const response = await fetch("/api/v1/products/addProduct", {
               method: "POST",
               body: formData,
             });
