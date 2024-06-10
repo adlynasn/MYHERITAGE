@@ -6,18 +6,20 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const path = require("path");
 const bcrypt = require("bcrypt");
+
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
 const cartRouter = require("./routes/cartRoute");
 const categoryRouter = require("./routes/categories");
 const session = require("express-session"); // Import express-session
-const orderRoute = require('./routes/orderRoute');
+const orderRoute = require("./routes/orderRoute");
 
 
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
 const { User } = require("./models/userModel");
+
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
@@ -97,7 +99,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(`${api}/user`, usersRouter);
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoryRouter);
-app.use('/api', orderRoute); 
+app.use("/api", orderRoute);
+
 
 // MongoDB Operations
 app.post("/addUser", async (req, res) => {
@@ -287,7 +290,6 @@ app.get("/api/products/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 app.get("/api/featured-products", async (req, res) => {
   try {
     // Assuming you have a Product model and 'isFeatured' is a boolean attribute
@@ -297,7 +299,6 @@ app.get("/api/featured-products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 
 app.get("/cart", async (req, res) => {
   const uri =
@@ -437,7 +438,7 @@ app.post("/cart/update", async (req, res) => {
     }
   });
 
-  app.delete('/cart/remove/:productId', async (req, res) => {
+app.delete('/cart/remove/:productId', async (req, res) => {
     const uri = "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
     const client = new MongoClient(uri);
     const productId = req.params.productId;
@@ -465,7 +466,6 @@ app.post("/cart/update", async (req, res) => {
         await client.close();
     }
 });
-
 
 // POST /order/create route
 app.post('/api/order/create', async (req, res) => {
@@ -570,38 +570,6 @@ app.post("/loginAdmin", async (req, res) => {
   }
 });
 
-app.post("/addProduct", async (req, res) => {
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-    const database = client.db("myheritageDB");
-    const collection = database.collection("products");
-
-    const product = {
-      name: req.body.name,
-      description: req.body.description,
-      artisanName: req.body.artisanName,
-      image: req.body.image || [], // Assuming you're passing an array of image URLs
-      price: parseFloat(req.body.price), // Assuming price is a number
-      category: req.body.category, // Assuming you have a category field
-      countInStock: parseInt(req.body.countInStock), // Assuming countInStock is a number
-      rating: parseInt(req.body.rating), // Assuming rating is a number
-      numReviews: parseInt(req.body.numReviews), // Assuming numReviews is a number
-      isFeatured: req.body.isFeatured === "true" || false, // Assuming isFeatured is a boolean
-      dateCreated: new Date(), // Assuming you want to store the creation date
-    };
-
-    const result = await collection.insertOne(product);
-    res.status(201).send(`Product added with ID: ${result.insertedId}`);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error adding product");
-  } finally {
-    await client.close();
-  }
-});
-
 app.get("/getProducts", async (req, res) => {
   const client = new MongoClient(uri);
 
@@ -645,11 +613,10 @@ app.delete("/deleteProduct/:id", async (req, res) => {
   }
 });
 
-
 // Corrected /change-password Route with Predefined ID
-app.post('/change-password', async (req, res) => {
+app.post("/change-password", async (req, res) => {
   const client = new MongoClient(uri);
-  const predefinedUserId = '665de9438d48ef4b168eee50'; // predefined user ID
+  const predefinedUserId = "665de9438d48ef4b168eee50"; // predefined user ID
   const { currentPassword, newPassword } = req.body;
 
   try {
@@ -657,13 +624,15 @@ app.post('/change-password', async (req, res) => {
     const database = client.db("myheritageDB");
     const usersCollection = database.collection("users");
 
-    const user = await usersCollection.findOne({ _id: new ObjectId(predefinedUserId) });
+    const user = await usersCollection.findOne({
+      _id: new ObjectId(predefinedUserId),
+    });
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(404).send("User not found");
     }
 
     if (user.password !== currentPassword) {
-      return res.status(400).send('Current password is incorrect');
+      return res.status(400).send("Current password is incorrect");
     }
 
     await usersCollection.updateOne(
@@ -671,12 +640,12 @@ app.post('/change-password', async (req, res) => {
       { $set: { password: newPassword } }
     );
 
-    res.send('Password has been successfully changed');
+    res.send("Password has been successfully changed");
   } catch (error) {
     console.error("Error changing password:", error);
-    res.status(500).send('Server error');
-  }});
-
+    res.status(500).send("Server error");
+  }
+});
 
 // PUT route to update a product
 app.put("/updateProduct/:id", async (req, res) => {
@@ -819,6 +788,33 @@ app.get("/getCategories", async (req, res) => {
   }
 });
 
+app.delete("/deleteCategory/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const categoryId = req.params.id; // Correct variable name
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("categories");
+
+    // Ensure the ObjectId is created properly
+    const result = await collection.deleteOne({
+      _id: new ObjectId(categoryId),
+    });
+
+    if (result.deletedCount === 1) {
+      res.status(200).send("Category deleted successfully");
+    } else {
+      res.status(404).send("Category not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting category");
+  } finally {
+    await client.close();
+  }
+});
+
 //get artisan Id
 app.get("/getArtisansList", async (req, res) => {
   const client = new MongoClient(uri);
@@ -854,12 +850,35 @@ app.get("/getInquiries", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Error retrieving inquiries");
-
   } finally {
     await client.close();
   }
 });
 
+app.delete("/deleteInquiry/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const inquiryId = req.params.id;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("inquiries");
+
+    // Ensure the ObjectId is created properly
+    const result = await collection.deleteOne({ _id: new ObjectId(inquiryId) });
+
+    if (result.deletedCount === 1) {
+      res.status(200).send("Inquiry deleted successfully");
+    } else {
+      res.status(404).send("Inquiry not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting inquiry");
+  } finally {
+    await client.close();
+  }
+});
 
 // Error handling middlewares
 app.use(notFound);

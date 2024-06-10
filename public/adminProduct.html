@@ -29,7 +29,7 @@
           <div
             class="brand-logo d-flex align-items-center justify-content-between"
           >
-            <a href="./indexAdmin.html" class="text-nowrap logo-img">
+            <a href="./adminIndex.html" class="text-nowrap logo-img">
               <img
                 src="../assets/images/MYHeritage_Logo.png"
                 width="180"
@@ -53,7 +53,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./index.html"
+                  href="./adminIndex.html"
                   aria-expanded="false"
                 >
                   <span>
@@ -387,8 +387,6 @@
                     <th>Product Description</th>
                     <th>Product Category Id</th>
                     <th>Product Category Name</th>
-                    <th>Artisan Id</th>
-                    <th>Artisan Name</th>
                     <th>Price</th>
                     <th>In Stock</th>
                     <th>Action</th>
@@ -402,18 +400,14 @@
                     const tr = document.createElement("tr");
                     const categoryName =
                       categoriesMap[product.category] || "Unknown Category";
-                    const artisanName =
-                      artisansMap[product.artisan] || "Unknown Category";
+
                     tr.innerHTML = `
                     <td>${product.name}</td>
                     <td>${product.description}</td>
                     <td>${product.category}</td>
                     <td>${categoryName}</td>
-                    <td>${product.artisan}</td>
-                    <td>${artisanName}</td>
                     <td>RM${product.price}</td>
                     <td>${product.countInStock}</td>
-                    <td>${product.image}</td>
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-secondary" onclick="deleteProduct('${product._id}')">Delete</button>
@@ -520,7 +514,7 @@
           formData.append("image", document.getElementById("image").files[0]);
 
           try {
-            const response = await fetch("/upload", {
+            const response = await fetch("/api/v1/products/addProduct", {
               method: "POST",
               body: formData,
             });

@@ -60,3 +60,4 @@ const handleRemoveFromCart = async (req, res) => {
 };
 
 module.exports = { getCart, handleAddToCart, handleRemoveFromCart };
+
