@@ -13,6 +13,7 @@ const categoryRouter = require("./routes/categories");
 const session = require("express-session"); // Import express-session
 const orderRoute = require('./routes/orderRoute');
 
+
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
@@ -20,9 +21,7 @@ const { User } = require("./models/userModel");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
-
 const multer = require("multer");
-
 const app = express();
 const api = process.env.API_URL;
 const PORT = process.env.PORT || 3002;
@@ -173,6 +172,7 @@ const Storage = multer.diskStorage({
 const upload = multer({
   storage: Storage,
 }).single("image");
+
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
