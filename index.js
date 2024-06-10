@@ -14,10 +14,13 @@ const categoryRouter = require("./routes/categories");
 const session = require("express-session"); // Import express-session
 const orderRoute = require("./routes/orderRoute");
 
+
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
 const { Cart } = require("./models/cartModel"); // Import the Cart model
 const { User } = require("./models/userModel");
+
+
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
 const multer = require("multer");
@@ -98,6 +101,7 @@ app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoryRouter);
 app.use("/api", orderRoute);
 
+
 // MongoDB Operations
 app.post("/addUser", async (req, res) => {
   // MongoDB connection URI
@@ -171,6 +175,7 @@ const Storage = multer.diskStorage({
 const upload = multer({
   storage: Storage,
 }).single("image");
+
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -321,147 +326,176 @@ app.get("/cart", async (req, res) => {
   }
 });
 
-app.post("/cart/add", async (req, res) => {
+app.post('/cart/add', async (req, res) => {
+  const { userId, productId, quantity } = req.body;
+
+  if (!userId || !productId || !quantity) {
+    return res.status(400).send('Missing required fields');
+  }
+
   try {
-    // Extract userId and productId from the request body
-    const { userId, productId } = req.body;
-
-    // Perform any necessary validation, such as checking if userId and productId are provided
-    if (!userId || !productId) {
-      return res
-        .status(400)
-        .json({ success: false, error: "User ID and product ID are required" });
-    }
-
-    // Fetch the product details from the database using the productId
     const product = await Product.findById(productId);
     if (!product) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Product not found" });
+      return res.status(404).send('Product not found');
     }
 
-    // Construct the cart object including product details
-    const cartItem = {
-      productId: productId,
-      productName: product.name,
-      quantity: 1, // Quantity can be adjusted as needed
-      price: product.price,
-      imagePath: product.imagePath, // Assuming imagePath is a field in your Product model
-      total: product.price, // Initial total is price * quantity (1)
-    };
+    await client.connect();
+    const database = client.db('myheritageDB');
+    const cartsCollection = database.collection('carts');
 
-    // Find the user's cart or create a new one if it doesn't exist
-    let userCart = await Cart.findOne({ userId });
+    if (!cartsCollection) {
+      return res.status(500).send('Carts collection not found');
+    }
 
-    if (!userCart) {
-      userCart = new Cart({ userId, items: [cartItem] });
+    // Assume a structure where each user has a cart document
+    let cart = await cartsCollection.findOne({ userId: userId });
+
+    if (!cart) {
+      // Create a new cart for the user if not exists
+      await cartsCollection.insertOne({
+        userId: userId,
+        items: [{
+          productId: new ObjectId(productId),
+          productName: product.name,
+          quantity: 1,
+          price: product.price,
+          imagePath: product.imagePath,
+          total: product.price * quantity
+        }],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        status: 'active'
+      });
     } else {
-      // If the user's cart already exists, check if the product is already in the cart
-      const existingItemIndex = userCart.items.findIndex(
-        (item) => item.productId === productId
-      );
-      if (existingItemIndex !== -1) {
-        // If the product already exists in the cart, increase the quantity
-        userCart.items[existingItemIndex].quantity++;
+      // Update existing cart
+      const productIndex = cart.items.findIndex(item => item.productId.equals(productId));
+      if (productIndex > -1) {
+        // Product exists in the cart, update quantity
+        cart.items[productIndex].quantity += quantity;
+        cart.items[productIndex].total += product.price * quantity;
       } else {
-        // If the product is not in the cart, add it as a new item
-        userCart.items.push(cartItem);
+        // Product does not exist in the cart, add new product
+        cart.items.push({
+          productId: new ObjectId(productId),
+          productName: product.name,
+          quantity: 1,
+          price: product.price,
+          imagePath: product.imagePath,
+          total: product.price * quantity
+        });
       }
+      await cartsCollection.updateOne(
+        { userId: userId },
+        { $set: { items: cart.items, updatedAt: new Date() } }
+      );
     }
 
-    // Save the updated user's cart to the database
-    await userCart.save();
-
-    // Return a success message or any relevant data
-    res.json({
-      success: true,
-      message: "Product added to cart successfully",
-      userCart,
-    });
+    res.json({ message: 'Item added to cart successfully' });
   } catch (error) {
-    console.error("Error adding item to cart:", error);
-    res
-      .status(500)
-      .json({ success: false, error: "Error adding item to cart" });
+    console.error('Error adding item to cart:', error);
+    res.status(500).send('Internal Server Error');
+  } finally {
+    await client.close();
   }
 });
+
 
 // POST route to handle updating cart quantities
 app.post("/cart/update", async (req, res) => {
+  const uri = "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
+  const client = new MongoClient(uri);
+
   try {
-    const { userId, quantities } = req.body;
+      const { userId, quantities } = req.body;
+      await client.connect();
+      const database = client.db('myheritageDB');
+      const cartsCollection = database.collection('carts');
 
-    let userCart = await Cart.findOne({ userId });
-    if (!userCart) {
-      return res.status(404).json({ success: false, error: "Cart not found" });
-    }
-
-    quantities.forEach((q) => {
-      const itemIndex = userCart.items.findIndex((item) =>
-        item.productId.equals(q.productId)
-      );
-      if (itemIndex !== -1) {
-        userCart.items[itemIndex].quantity = q.quantity;
-        userCart.items[itemIndex].total =
-          q.quantity * userCart.items[itemIndex].price;
+      let userCart = await cartsCollection.findOne({ userId });
+      if (!userCart) {
+        return res.status(404).json({ success: false, error: "Cart not found" });
       }
-    });
 
-    await userCart.save();
-    res.json({ success: true, message: "Cart updated successfully", userCart });
-  } catch (error) {
-    console.error("Error updating cart:", error);
-    res.status(500).json({ success: false, error: "Error updating cart" });
-  }
-});
-
-// Removing an item from the cart
-app.delete("/cart/remove/:productId", async (req, res) => {
-  const productId = req.params.productId;
-  const userId = "665de9438d48ef4b168eee50"; // Hardcoded user ID
-
-  try {
-    const result = await Cart.updateOne(
-      { userId },
-      { $pull: { items: { productId } } }
-    );
-
-    if (result.nModified > 0) {
-      res.json({ success: true });
-    } else {
-      res.json({ success: false, message: "Item not found in cart" });
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error removing item from cart",
-        error,
+      quantities.forEach(q => {
+        const itemIndex = userCart.items.findIndex(item => item.productId.equals(q.productId));
+        if (itemIndex !== -1) {
+          userCart.items[itemIndex].quantity = q.quantity;
+          userCart.items[itemIndex].total = q.quantity * userCart.items[itemIndex].price;
+        }
       });
-  }
+
+      await cartsCollection.updateOne(
+        { userId: userId },
+        { $set: { items: userCart.items, updatedAt: new Date() } }
+      );
+
+      res.json({ success: true, message: "Cart updated successfully", userCart });
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      res.status(500).json({ success: false, error: "Error updating cart" });
+    } finally {
+      await client.close();
+    }
+  });
+
+app.delete('/cart/remove/:productId', async (req, res) => {
+    const uri = "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
+    const client = new MongoClient(uri);
+    const productId = req.params.productId;
+    const userId = '665de9438d48ef4b168eee50'; // Hardcoded user ID
+
+    try {
+        await client.connect();
+        const database = client.db('myheritageDB');
+        const cartsCollection = database.collection('carts');
+
+        const result = await cartsCollection.updateOne(
+            { userId },
+            { $pull: { items: { productId: new ObjectId(productId) } } }
+        );
+
+        if (result.modifiedCount > 0) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false, message: 'Item not found in cart' });
+        }
+    } catch (error) {
+        console.error('Error removing item from cart:', error);
+        res.status(500).json({ success: false, message: 'Error removing item from cart', error });
+    } finally {
+        await client.close();
+    }
 });
 
 // POST /order/create route
-app.post("/api/order/create", async (req, res) => {
+app.post('/api/order/create', async (req, res) => {
   try {
-    // Extract order data from request body
-    const { userID, items } = req.body;
+      // Extract order data from request body
+      const { userID, items } = req.body;
 
-    // Set the status to 'Pending'
-    const status = "Pending";
+      // Set the status to 'Pending'
+      const status = 'Pending';
 
-    // Here you can perform any necessary validation or data processing before creating the order
+      // Here you can perform any necessary validation or data processing before creating the order
 
-    // Call the createOrder function from the controller to create the order
-    const newOrder = await orderController.createOrder(userID, items, status);
+      // Call the createOrder function from the controller to create the order
+      const newOrder = await orderController.createOrder(userID, items, status);
 
-    // Return the newly created order in the response
-    res.status(201).json(newOrder);
+      // Return the newly created order in the response
+      res.status(201).json(newOrder);
   } catch (error) {
-    // Handle errors
-    res.status(400).json({ message: error.message });
+      // Handle errors
+      res.status(400).json({ message: error.message });
+  }
+});
+
+// GET route to retrieve all orders
+app.get('/api/order/all', async (req, res) => {
+  try {
+      const orders = await orderController.getAllOrders();
+      res.status(200).json(orders);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
   }
 });
 

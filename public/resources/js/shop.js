@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${product.description}</p>
                 <div class="d-flex justify-content-between flex-lg-wrap">
                   <p class="text-dark fs-5 fw-bold mb-0">RM${product.price}</p>
-                  <a href="#" class="add-to-cart-btn border border-secondary rounded-pill px-3 text-white" data-product-id="${
+                  <a href="#" id = "add-to-cart-btn" class="btn border border-secondary rounded-pill px-3 text-white" data-product-id="${
                     product._id
                   }">
                     <i class="fa fa-shopping-bag me-2 text-white"></i> Add to cart
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     productsContainer.innerHTML = productHtml;
 
     // Attach event listeners to "Add to cart" links
-    const addToCartLinks = document.querySelectorAll(".add-to-cart-btn");
+    const addToCartLinks = document.querySelectorAll("#add-to-cart-btn");
     addToCartLinks.forEach((link) => {
       link.addEventListener("click", () => {
         const productId = link.getAttribute("data-product-id");

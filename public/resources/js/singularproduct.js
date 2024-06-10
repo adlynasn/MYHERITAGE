@@ -16,14 +16,14 @@ async function fetchProductDetails(productId) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const product = await response.json();
-        displayProductDetails(product);
+        displayProductDetails(product, productId); // Pass product ID to displayProductDetails
     } catch (error) {
         console.error('Error fetching product details:', error);
         document.getElementById('product-detail').innerHTML = '<p>Error fetching product details.</p>';
     }
 }
 
-function displayProductDetails(product) {
+function displayProductDetails(product, productId) {
     const imageElement = document.getElementById('mainImage');
     const productNameElement = document.getElementById('productName');
     const productPriceElement = document.getElementById('productPrice');
@@ -62,10 +62,41 @@ function displayProductDetails(product) {
         productStars.innerHTML += `<li><i class="fa ${starClass}"></i></li>`;
     }
 
-    // Add to Cart button functionality
+    // Attach event listener to "Add to cart" button
     addToCartBtn.addEventListener('click', () => {
-        console.log('Add to cart:', product);
-        // Implement your add to cart functionality here
+        const userId = "665de9438d48ef4b168eee50"; // Hardcoded userID
+
+        // Call the function to add the product to the cart
+        addToCart(userId, productId);
     });
 }
+
+  // Function to add a product to the cart
+  async function addToCart(userId, productId) {
+    try {
+      const response = await fetch("/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          productId: productId,
+          quantity: 1, // You can adjust the quantity as needed
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+
+      const responseData = await response.json();
+      console.log("Response from server:", responseData); // Debugging log
+      alert(responseData.message); // Display a message to the user
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      alert("Error adding item to cart. Please try again later."); // Display an error message to the user
+    }
+  }
+
 
