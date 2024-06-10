@@ -433,11 +433,13 @@ app.delete("/cart/remove/:productId", async (req, res) => {
       res.json({ success: false, message: "Item not found in cart" });
     }
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error removing item from cart",
-      error,
-    });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error removing item from cart",
+        error,
+      });
   }
 });
 
@@ -533,8 +535,6 @@ app.post("/loginAdmin", async (req, res) => {
     await client.close();
   }
 });
-
-
 
 app.get("/getProducts", async (req, res) => {
   const client = new MongoClient(uri);
