@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/:userId', getCart);
 
 // Route for adding to cart
-router.post('/addToCart', handleAddToCart);
+router.post('/cart/add', handleAddToCart);
 
 // Route for removing from cart
 router.delete('/remove/:productId/:userId', handleRemoveFromCart);
