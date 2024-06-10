@@ -12,8 +12,7 @@ const productsRouter = require("./routes/products");
 const cartRouter = require("./routes/cartRoute");
 const categoryRouter = require("./routes/categories");
 const session = require("express-session"); // Import express-session
-const orderRoute = require('./routes/orderRoute');
-
+const orderRoute = require("./routes/orderRoute");
 
 const MongoDBStore = require("connect-mongodb-session")(session); // Import connect-mongodb-session
 const { Product } = require("./models/productModel");
@@ -98,7 +97,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(`${api}/user`, usersRouter);
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoryRouter);
-app.use('/api', orderRoute); 
+app.use("/api", orderRoute);
 
 // MongoDB Operations
 app.post("/addUser", async (req, res) => {
@@ -163,8 +162,6 @@ app.get("/getUser/:userID", async (req, res) => {
   }
 });
 
-
-
 //storage multer
 const Storage = multer.diskStorage({
   destination: "uploads",
@@ -175,7 +172,6 @@ const Storage = multer.diskStorage({
 const upload = multer({
   storage: Storage,
 }).single("image");
-
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -301,7 +297,6 @@ app.get("/api/featured-products", async (req, res) => {
   }
 });
 
-
 app.get("/cart", async (req, res) => {
   const uri =
     "mongodb+srv://mirza:UZtBgNjeBJaFjsbc@myheritagedb.oagnchb.mongodb.net/myheritageDB?tls=true";
@@ -335,13 +330,17 @@ app.post("/cart/add", async (req, res) => {
 
     // Perform any necessary validation, such as checking if userId and productId are provided
     if (!userId || !productId) {
-      return res.status(400).json({ success: false, error: "User ID and product ID are required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "User ID and product ID are required" });
     }
 
     // Fetch the product details from the database using the productId
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({ success: false, error: "Product not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Product not found" });
     }
 
     // Construct the cart object including product details
@@ -351,7 +350,7 @@ app.post("/cart/add", async (req, res) => {
       quantity: 1, // Quantity can be adjusted as needed
       price: product.price,
       imagePath: product.imagePath, // Assuming imagePath is a field in your Product model
-      total: product.price // Initial total is price * quantity (1)
+      total: product.price, // Initial total is price * quantity (1)
     };
 
     // Find the user's cart or create a new one if it doesn't exist
@@ -361,7 +360,9 @@ app.post("/cart/add", async (req, res) => {
       userCart = new Cart({ userId, items: [cartItem] });
     } else {
       // If the user's cart already exists, check if the product is already in the cart
-      const existingItemIndex = userCart.items.findIndex(item => item.productId === productId);
+      const existingItemIndex = userCart.items.findIndex(
+        (item) => item.productId === productId
+      );
       if (existingItemIndex !== -1) {
         // If the product already exists in the cart, increase the quantity
         userCart.items[existingItemIndex].quantity++;
@@ -375,83 +376,94 @@ app.post("/cart/add", async (req, res) => {
     await userCart.save();
 
     // Return a success message or any relevant data
-    res.json({ success: true, message: "Product added to cart successfully", userCart });
+    res.json({
+      success: true,
+      message: "Product added to cart successfully",
+      userCart,
+    });
   } catch (error) {
     console.error("Error adding item to cart:", error);
-    res.status(500).json({ success: false, error: "Error adding item to cart" });
+    res
+      .status(500)
+      .json({ success: false, error: "Error adding item to cart" });
   }
 });
 
 // POST route to handle updating cart quantities
 app.post("/cart/update", async (req, res) => {
   try {
-      const { userId, quantities } = req.body;
+    const { userId, quantities } = req.body;
 
-      let userCart = await Cart.findOne({ userId });
-      if (!userCart) {
-          return res.status(404).json({ success: false, error: "Cart not found" });
+    let userCart = await Cart.findOne({ userId });
+    if (!userCart) {
+      return res.status(404).json({ success: false, error: "Cart not found" });
+    }
+
+    quantities.forEach((q) => {
+      const itemIndex = userCart.items.findIndex((item) =>
+        item.productId.equals(q.productId)
+      );
+      if (itemIndex !== -1) {
+        userCart.items[itemIndex].quantity = q.quantity;
+        userCart.items[itemIndex].total =
+          q.quantity * userCart.items[itemIndex].price;
       }
+    });
 
-      quantities.forEach(q => {
-          const itemIndex = userCart.items.findIndex(item => item.productId.equals(q.productId));
-          if (itemIndex !== -1) {
-              userCart.items[itemIndex].quantity = q.quantity;
-              userCart.items[itemIndex].total = q.quantity * userCart.items[itemIndex].price;
-          }
-      });
-
-      await userCart.save();
-      res.json({ success: true, message: "Cart updated successfully", userCart });
+    await userCart.save();
+    res.json({ success: true, message: "Cart updated successfully", userCart });
   } catch (error) {
-      console.error("Error updating cart:", error);
-      res.status(500).json({ success: false, error: "Error updating cart" });
+    console.error("Error updating cart:", error);
+    res.status(500).json({ success: false, error: "Error updating cart" });
   }
 });
 
-
 // Removing an item from the cart
-app.delete('/cart/remove/:productId', async (req, res) => {
-    const productId = req.params.productId;
-    const userId = '665de9438d48ef4b168eee50'; // Hardcoded user ID
+app.delete("/cart/remove/:productId", async (req, res) => {
+  const productId = req.params.productId;
+  const userId = "665de9438d48ef4b168eee50"; // Hardcoded user ID
 
-    try {
-        const result = await Cart.updateOne(
-            { userId },
-            { $pull: { items: { productId } } }
-        );
+  try {
+    const result = await Cart.updateOne(
+      { userId },
+      { $pull: { items: { productId } } }
+    );
 
-        if (result.nModified > 0) {
-            res.json({ success: true });
-        } else {
-            res.json({ success: false, message: 'Item not found in cart' });
-        }
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Error removing item from cart', error });
+    if (result.nModified > 0) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false, message: "Item not found in cart" });
     }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error removing item from cart",
+      error,
+    });
+  }
 });
 
 // POST /order/create route
-app.post('/api/order/create', async (req, res) => {
+app.post("/api/order/create", async (req, res) => {
   try {
-      // Extract order data from request body
-      const { userID, items } = req.body;
+    // Extract order data from request body
+    const { userID, items } = req.body;
 
-      // Set the status to 'Pending'
-      const status = 'Pending';
+    // Set the status to 'Pending'
+    const status = "Pending";
 
-      // Here you can perform any necessary validation or data processing before creating the order
+    // Here you can perform any necessary validation or data processing before creating the order
 
-      // Call the createOrder function from the controller to create the order
-      const newOrder = await orderController.createOrder(userID, items, status);
+    // Call the createOrder function from the controller to create the order
+    const newOrder = await orderController.createOrder(userID, items, status);
 
-      // Return the newly created order in the response
-      res.status(201).json(newOrder);
+    // Return the newly created order in the response
+    res.status(201).json(newOrder);
   } catch (error) {
-      // Handle errors
-      res.status(400).json({ message: error.message });
+    // Handle errors
+    res.status(400).json({ message: error.message });
   }
 });
-
 
 app.post("/submitArtisanReview", async (req, res) => {
   const client = new MongoClient(uri);
@@ -599,11 +611,10 @@ app.delete("/deleteProduct/:id", async (req, res) => {
   }
 });
 
-
 // Corrected /change-password Route with Predefined ID
-app.post('/change-password', async (req, res) => {
+app.post("/change-password", async (req, res) => {
   const client = new MongoClient(uri);
-  const predefinedUserId = '665de9438d48ef4b168eee50'; // predefined user ID
+  const predefinedUserId = "665de9438d48ef4b168eee50"; // predefined user ID
   const { currentPassword, newPassword } = req.body;
 
   try {
@@ -611,13 +622,15 @@ app.post('/change-password', async (req, res) => {
     const database = client.db("myheritageDB");
     const usersCollection = database.collection("users");
 
-    const user = await usersCollection.findOne({ _id: new ObjectId(predefinedUserId) });
+    const user = await usersCollection.findOne({
+      _id: new ObjectId(predefinedUserId),
+    });
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(404).send("User not found");
     }
 
     if (user.password !== currentPassword) {
-      return res.status(400).send('Current password is incorrect');
+      return res.status(400).send("Current password is incorrect");
     }
 
     await usersCollection.updateOne(
@@ -625,12 +638,12 @@ app.post('/change-password', async (req, res) => {
       { $set: { password: newPassword } }
     );
 
-    res.send('Password has been successfully changed');
+    res.send("Password has been successfully changed");
   } catch (error) {
     console.error("Error changing password:", error);
-    res.status(500).send('Server error');
-  }});
-
+    res.status(500).send("Server error");
+  }
+});
 
 // PUT route to update a product
 app.put("/updateProduct/:id", async (req, res) => {
@@ -773,6 +786,33 @@ app.get("/getCategories", async (req, res) => {
   }
 });
 
+app.delete("/deleteCategory/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const categoryId = req.params.id; // Correct variable name
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("categories");
+
+    // Ensure the ObjectId is created properly
+    const result = await collection.deleteOne({
+      _id: new ObjectId(categoryId),
+    });
+
+    if (result.deletedCount === 1) {
+      res.status(200).send("Category deleted successfully");
+    } else {
+      res.status(404).send("Category not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting category");
+  } finally {
+    await client.close();
+  }
+});
+
 //get artisan Id
 app.get("/getArtisansList", async (req, res) => {
   const client = new MongoClient(uri);
@@ -808,12 +848,35 @@ app.get("/getInquiries", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Error retrieving inquiries");
-
   } finally {
     await client.close();
   }
 });
 
+app.delete("/deleteInquiry/:id", async (req, res) => {
+  const client = new MongoClient(uri);
+  const inquiryId = req.params.id;
+
+  try {
+    await client.connect();
+    const database = client.db("myheritageDB");
+    const collection = database.collection("inquiries");
+
+    // Ensure the ObjectId is created properly
+    const result = await collection.deleteOne({ _id: new ObjectId(inquiryId) });
+
+    if (result.deletedCount === 1) {
+      res.status(200).send("Inquiry deleted successfully");
+    } else {
+      res.status(404).send("Inquiry not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting inquiry");
+  } finally {
+    await client.close();
+  }
+});
 
 // Error handling middlewares
 app.use(notFound);
