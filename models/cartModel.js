@@ -12,12 +12,12 @@ const cartSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, 
       required: true 
     },
-
+    
     productName: { 
       type: String, 
       required: true 
     },
-
+    
     quantity: { 
       type: Number, 
       default: 1 
@@ -37,7 +37,6 @@ const cartSchema = new mongoose.Schema({
       type: Number, 
       required: true 
     } // New total field
-
   }],
 
   createdAt: { 
